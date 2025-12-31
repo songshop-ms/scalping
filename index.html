@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BY SONG SCALP | The premium scalp artistry</title>
+    <title>BY SONG SCALP | Rewrite your worth</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,7 +36,7 @@
         .logo { font-size: 0.9rem; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; color: var(--white); opacity: 0.8; }
 
         /* =========================================
-           [1. Hero Section - Swapped Text Design]
+           [1. Hero Section - Final Text Layout]
            ========================================= */
         .hero {
             position: relative;
@@ -46,7 +46,7 @@
             background: radial-gradient(circle at 50% 45%, #151515 0%, #000 100%);
         }
 
-        /* [수정] 배경: REWRITE YOUR WORTH (웅장한 아웃라인) */
+        /* [수정] 배경: THE PREMIUM SCALP ARTISTRY (웅장한 아웃라인) */
         .hero-bg-text {
             position: absolute;
             top: 50%; left: 50%;
@@ -57,15 +57,15 @@
         .hero-bg-text h2 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: clamp(4rem, 15vw, 10rem); /* 화면을 꽉 채우는 크기 */
+            font-size: clamp(3.5rem, 12vw, 9rem); /* 문구 길이에 맞춰 크기 조정 */
             line-height: 0.9;
             text-transform: uppercase;
             color: transparent;
-            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.12);
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
             display: flex; flex-direction: column;
         }
 
-        /* [수정] 중앙 포인트: The premium scalp artistry (뮤트 골드) */
+        /* [수정] 중앙 포인트: Rewrite your worth (뮤트 골드, 정중앙 배치) */
         .hero-focal-text {
             position: absolute;
             top: 50%; left: 50%;
@@ -76,23 +76,24 @@
             pointer-events: none;
         }
         .hero-focal-text h1 {
-            font-size: clamp(1.4rem, 3.5vw, 2.2rem); /* 문구가 길어짐에 따라 크기 최적화 */
+            font-size: clamp(2rem, 5vw, 3.5rem); /* 메인 타이틀 크기 확대 */
             font-weight: 100;
-            letter-spacing: 6px;
+            letter-spacing: 8px;
             color: var(--sand-gold);
             text-transform: uppercase;
             text-shadow: 0 0 30px rgba(0,0,0,0.9);
+            margin-bottom: 20px;
         }
         .hero-focal-text .sub-dash {
-            width: 40px; height: 1px; background: var(--sand-gold);
-            margin: 20px auto; opacity: 0.6;
+            width: 50px; height: 1px; background: var(--sand-gold);
+            margin: 0 auto; opacity: 0.6;
         }
 
-        /* 3D 캐러셀: 배경 글씨 앞, 중앙 글씨 뒤에 배치 */
+        /* 3D 캐러셀: 중앙 글씨와 겹치지 않게 하단으로 이동 */
         .carousel-viewport {
-            position: absolute; top: 50%; left: 50%;
+            position: absolute; top: 65%; left: 50%; /* 위치 하단으로 조정 */
             transform: translate(-50%, -50%);
-            width: 100%; height: 600px;
+            width: 100%; height: 500px;
             display: flex; justify-content: center; align-items: center;
             perspective: 2500px; cursor: grab;
             z-index: 5;
@@ -101,14 +102,15 @@
 
         .carousel-3d {
             position: relative;
-            width: 280px; height: 400px; /* 카드 크기 확대 유지 */
+            width: 260px; height: 380px; /* 카드 크기 약간 조정 */
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
         }
         
         @media (max-width: 768px) {
-            .carousel-3d { width: 220px; height: 320px; }
+            .carousel-3d { width: 200px; height: 300px; }
             .hero-bg-text h2 { -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.15); }
+            .carousel-viewport { top: 70%; } /* 모바일에서 더 하단으로 */
         }
 
         .card {
@@ -120,10 +122,10 @@
         }
         .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); transition: 0.5s; }
 
-        .drag-hint { position: absolute; bottom: 50px; font-size: 0.7rem; letter-spacing: 4px; color: var(--gray); font-weight: 300; }
+        .drag-hint { position: absolute; bottom: 30px; font-size: 0.7rem; letter-spacing: 4px; color: var(--gray); font-weight: 300; }
 
         /* =========================================
-           [나머지 섹션 - 기존의 고급스러운 톤 유지]
+           [나머지 섹션 - 기존 스타일 유지]
            ========================================= */
         .director { padding: 180px 0; background: #080808; }
         .director-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
@@ -160,14 +162,14 @@
     <section class="hero">
         <div class="hero-bg-text" data-aos="zoom-out" data-aos-duration="2000">
             <h2>
-                <span>REWRITE</span>
-                <span>YOUR</span>
-                <span>WORTH</span>
+                <span>THE PREMIUM</span>
+                <span>SCALP</span>
+                <span>ARTISTRY</span>
             </h2>
         </div>
 
         <div class="hero-focal-text" data-aos="fade-up" data-aos-delay="500">
-            <h1>The premium scalp artistry</h1>
+            <h1>Rewrite your worth</h1>
             <div class="sub-dash"></div>
         </div>
         
@@ -184,7 +186,7 @@
             </div>
         </div>
 
-        <div class="drag-hint">DRAG TO ROTATE</div>
+        <div class="drag-hint">DRAG TO EXPLORE</div>
     </section>
 
     <section class="director">
@@ -228,7 +230,8 @@
         let rotation = 0; let isDragging = false; startX = 0; lastRotation = 0;
 
         function setRadius() {
-            const radius = window.innerWidth <= 768 ? 400 : 600; // 카드 장수가 8장이므로 넉넉한 반경 확보
+            // 카드 위치가 하단으로 내려갔으므로 반경을 조금 줄여 시각적 균형을 맞춤
+            const radius = window.innerWidth <= 768 ? 350 : 550; 
             cards.forEach((card, i) => {
                 card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
             });
