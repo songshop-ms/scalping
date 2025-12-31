@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BY SONG SCALP | Rewrite your worth</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Tenor+Sans&family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -13,9 +13,9 @@
         :root {
             --bg: #050505;
             --white: #ffffff;
-            /* 촌스럽지 않은 하이엔드 샴페인 골드 */
-            --luxury-gold: #D4C4A8; 
-            --deep-gold: #B5A48B;
+            /* 채도를 낮춰 더 고급스러운 샴페인 골드 */
+            --luxury-gold: #C5B358; 
+            --gray: #777777;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,123 +23,103 @@
             font-family: 'Noto Sans KR', sans-serif;
             background-color: var(--bg);
             color: var(--white);
-            overflow-x: hidden; line-height: 1.4;
+            overflow-x: hidden; line-height: 1.5;
         }
         body.modal-open { overflow: hidden; }
 
         /* [Header] */
         header {
-            position: fixed; top: 0; width: 100%; padding: 40px 0; z-index: 1000;
-            text-align: center;
+            position: fixed; top: 0; width: 100%; padding: 30px 0; z-index: 1000;
+            text-align: center; mix-blend-mode: difference;
         }
         .logo { 
-            font-size: 0.8rem; font-weight: 300; letter-spacing: 8px; 
-            text-transform: uppercase; color: var(--white); opacity: 0.6;
+            font-family: 'Montserrat', sans-serif; font-weight: 300;
+            font-size: 0.8rem; letter-spacing: 8px; 
+            text-transform: uppercase; color: var(--white); opacity: 0.8;
         }
 
         /* =========================================
-           [1. Hero Section - Magazine Layout]
+           [1. Hero Section - Minimal Luxury]
            ========================================= */
         .hero {
             position: relative;
             height: 100vh; width: 100%;
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
-            background: #000;
+            /* 더 깊이감 있고 차분한 배경 그라데이션 */
+            background: radial-gradient(circle at center, #111 0%, #000 90%);
         }
 
-        /* Layer 1: 배경에 깔리는 거대한 텍스트 (Outline) */
-        .hero-bg-text {
+        /* [전면 수정] 미니멀 타이틀 헤더 (상단 배치) */
+        .hero-minimal-header {
             position: absolute;
+            top: 18%; /* 상단에 콤팩트하게 위치 */
             width: 100%;
             text-align: center;
-            z-index: 0;
-            pointer-events: none;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10;
         }
-        .hero-bg-text h2 {
+        .hero-sub-title {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(5rem, 18vw, 15rem);
-            line-height: 0.8;
-            text-transform: uppercase;
-            color: transparent;
-            /* 매우 얇은 테두리로 세련미 강조 */
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
-            display: flex; flex-direction: column;
+            font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 15px; display: block;
+        }
+        .hero-main-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100; /* 가장 얇은 두께로 고급스러움 극대화 */
+            font-size: clamp(2rem, 4vw, 3rem); /* 크기 대폭 축소 */
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--luxury-gold);
+            margin-bottom: 20px;
+        }
+        .gold-divider {
+            width: 40px; height: 1px; background: var(--luxury-gold);
+            margin: 0 auto; opacity: 0.5;
         }
 
-        /* Layer 2: 3D 캐러셀 (배경과 타이틀 사이) */
+        /* 3D 캐러셀 (중앙 하단 배치, 텍스트와 안 겹침) */
         .carousel-viewport {
             position: absolute;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; height: 600px;
+            top: 58%; /* 텍스트 아래로 충분히 내림 */
+            left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: 500px;
             display: flex; justify-content: center; align-items: center;
             perspective: 2500px;
-            cursor: grab;
-            z-index: 5;
+            cursor: grab; z-index: 5;
         }
         .carousel-viewport:active { cursor: grabbing; }
 
         .carousel-3d {
             position: relative;
-            width: 280px; height: 400px; /* 카드 크기 확대 */
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            width: 280px; height: 400px;
+            transform-style: preserve-3d; transition: transform 0.1s ease-out;
         }
-
         .card {
-            position: absolute;
-            width: 100%; height: 100%;
-            left: 0; top: 0;
-            border-radius: 2px;
-            overflow: hidden;
-            backface-visibility: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
+            border-radius: 2px; overflow: hidden; backface-visibility: hidden;
+            border: 1px solid rgba(197, 179, 88, 0.2); /* 은은한 골드 테두리 */
             -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, rgba(255,255,255,0.05));
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.7);
+            background: #000;
         }
-        .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); }
+        .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(5%); transition:0.5s;}
+        .card:hover img { filter: grayscale(0%); }
 
-        /* Layer 3: 정중앙 메인 금색 타이틀 (Rewrite your worth) */
-        .hero-focal-title {
-            position: absolute;
-            z-index: 10;
-            text-align: center;
-            pointer-events: none;
-            width: 100%;
+        /* [복구] 스크롤 아이콘 */
+        .scroll-indicator {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 10; opacity: 0.6; transition: 0.3s;
         }
-        .hero-focal-title h1 {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 400;
-            letter-spacing: 12px;
-            color: var(--luxury-gold);
-            text-transform: uppercase;
-            /* 텍스트 가독성을 위한 미세한 그림자 */
-            text-shadow: 0 0 40px rgba(0,0,0,0.9);
-            margin-bottom: 10px;
-        }
-        .hero-focal-title p {
-            font-size: 0.75rem;
-            letter-spacing: 5px;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-        }
+        .scroll-indicator:hover { opacity: 1; }
+        .mouse { width: 24px; height: 38px; border: 2px solid var(--luxury-gold); border-radius: 12px; position: relative; }
+        .wheel { width: 2px; height: 8px; background: var(--luxury-gold); border-radius: 2px; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); animation: scroll 1.5s infinite; }
+        @keyframes scroll { 0% { top: 8px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
 
-        /* 모바일 최적화 */
-        @media (max-width: 768px) {
-            .carousel-3d { width: 220px; height: 320px; }
-            .hero-bg-text h2 { -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1); }
-            .hero-focal-title h1 { letter-spacing: 6px; }
-        }
-
-        /* [이하 섹션 톤앤매너 통일] */
+        /* [나머지 섹션 유지 - 톤앤매너 통일] */
         .director { padding: 180px 0; background: #080808; }
         .director-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center; }
         @media (max-width: 900px) { .director-grid { grid-template-columns: 1fr; } }
-        .director-info h3 { font-family: 'Tenor Sans', sans-serif; font-size: 2.8rem; font-weight: 300; color: var(--luxury-gold); margin-bottom: 30px; }
-        .history li::before { content:''; width: 4px; height: 4px; background: var(--deep-gold); border-radius: 50%; margin-right: 15px; display: inline-block; vertical-align: middle;}
+        .director-info h3 { font-family:'Montserrat', sans-serif; font-weight:300; font-size: 2.5rem; color: var(--luxury-gold); margin-bottom: 30px; }
+        .history li::before { content:''; width:4px; height:4px; background: var(--luxury-gold); border-radius:50%; margin-right:15px; display:inline-block; vertical-align:middle;}
 
         .floating { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
         .btn-circle { width: 50px; height: 50px; border-radius: 50%; background: var(--luxury-gold); color: #000; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; transition: 0.3s; }
@@ -153,16 +133,10 @@
     </header>
 
     <section class="hero">
-        <div class="hero-bg-text" data-aos="zoom-out" data-aos-duration="2000">
-            <h2>
-                <span>SCALP</span>
-                <span>ARTISTRY</span>
-            </h2>
-        </div>
-
-        <div class="hero-focal-title" data-aos="fade-up" data-aos-delay="500">
-            <h1>Rewrite your worth</h1>
-            <p>Premium Scalp Design Solution</p>
+        <div class="hero-minimal-header" data-aos="fade-down" data-aos-duration="1500">
+            <span class="hero-sub-title">The premium scalp artistry</span>
+            <h1 class="hero-main-title">Rewrite your worth</h1>
+            <div class="gold-divider"></div>
         </div>
 
         <div class="carousel-viewport" id="drag-area">
@@ -177,6 +151,10 @@
                 <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=AFTER"></div>
             </div>
         </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse"><div class="wheel"></div></div>
+        </div>
     </section>
 
     <section class="director">
@@ -186,13 +164,13 @@
                     <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80">
                 </div>
                 <div data-aos="fade-up" data-aos-delay="100">
-                    <span style="color:var(--deep-gold); letter-spacing: 5px; font-size: 0.75rem;">MASTER DIRECTOR</span>
+                    <span style="color:var(--luxury-gold); letter-spacing: 4px; font-size: 0.75rem;">MASTER DIRECTOR</span>
                     <h3 style="margin-top:20px;">단 하나의 점도<br>의미 없이 찍지 않습니다.</h3>
-                    <p style="color:#666; margin-bottom:40px; font-weight:300;">SMP는 단순한 미용이 아닌 예술입니다. 고객의 두상과 결을 분석하여 가장 완벽한 입체감을 선사합니다.</p>
-                    <ul class="history" style="list-style:none;">
-                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">THE BLACK 대표원장</li>
-                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">국제 SMP 전문가 협회(ISPA) 정회원</li>
-                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">K-Beauty Scalp Design Grand Prize</li>
+                    <p style="color:#888; margin-bottom:40px; font-weight:300;">SMP는 단순한 미용이 아닌 예술입니다. 고객의 두상과 결을 분석하여 가장 완벽한 입체감을 선사합니다.</p>
+                    <ul class="history" style="list-style:none; color:#999; font-weight:300;">
+                        <li style="margin-bottom:10px;">THE BLACK 대표원장</li>
+                        <li style="margin-bottom:10px;">국제 SMP 전문가 협회(ISPA) 정회원</li>
+                        <li>K-Beauty Scalp Design Grand Prize</li>
                     </ul>
                 </div>
             </div>
@@ -212,14 +190,10 @@
         const cards = document.querySelectorAll('.card');
         const count = cards.length;
         const angle = 360 / count;
-        let rotation = 0;
-        let isDragging = false;
-        let startX = 0;
-        let lastRotation = 0;
+        let rotation = 0; let isDragging = false; startX = 0; lastRotation = 0;
 
-        // 카드 크기가 커진 만큼 회전 반경(translateZ)도 확대하여 깊이감 조성
         function setRadius() {
-            const radius = window.innerWidth <= 768 ? 400 : 600; 
+            const radius = window.innerWidth <= 768 ? 400 : 580; 
             cards.forEach((card, i) => {
                 card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
             });
@@ -227,40 +201,14 @@
         setRadius();
         window.addEventListener('resize', setRadius);
 
-        // 자동 회전 (속도 미세 조정)
-        let autoDrive = setInterval(() => {
-            rotation -= 0.35;
-            carousel.style.transform = `rotateY(${rotation}deg)`;
-        }, 30);
-
+        let autoDrive = setInterval(() => { rotation -= 0.2; carousel.style.transform = `rotateY(${rotation}deg)`; }, 30);
         const dragArea = document.getElementById('drag-area');
-        
-        const onStart = (e) => {
-            isDragging = true;
-            startX = e.pageX || e.touches[0].pageX;
-            lastRotation = rotation;
-            clearInterval(autoDrive);
-        };
-        const onMove = (e) => {
-            if(!isDragging) return;
-            const x = e.pageX || e.touches[0].pageX;
-            rotation = lastRotation + (x - startX) * 0.25;
-            carousel.style.transform = `rotateY(${rotation}deg)`;
-        };
-        const onEnd = () => {
-            isDragging = false;
-            autoDrive = setInterval(() => {
-                rotation -= 0.35;
-                carousel.style.transform = `rotateY(${rotation}deg)`;
-            }, 30);
-        };
+        const onStart = (e) => { isDragging = true; startX = e.pageX || e.touches[0].pageX; lastRotation = rotation; clearInterval(autoDrive); };
+        const onMove = (e) => { if(!isDragging) return; const x = e.pageX || e.touches[0].pageX; rotation = lastRotation + (x - startX) * 0.2; carousel.style.transform = `rotateY(${rotation}deg)`; };
+        const onEnd = () => { isDragging = false; autoDrive = setInterval(() => { rotation -= 0.2; carousel.style.transform = `rotateY(${rotation}deg)`; }, 30); };
 
-        dragArea.addEventListener('mousedown', onStart);
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseup', onEnd);
-        dragArea.addEventListener('touchstart', onStart);
-        dragArea.addEventListener('touchmove', onMove);
-        window.addEventListener('touchend', onEnd);
+        dragArea.addEventListener('mousedown', onStart); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onEnd);
+        dragArea.addEventListener('touchstart', onStart); dragArea.addEventListener('touchmove', onMove); window.addEventListener('touchend', onEnd);
     </script>
 </body>
 </html>
