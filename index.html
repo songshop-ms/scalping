@@ -3,191 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BY SONG SCALP | Minimalism</title>
+    <title>BY SONG SCALP | Artistry</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+    <!-- 폰트 로드 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Montserrat:wght@100;200;300&family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* [Global Reset] */
         :root {
-            --bg: #050505;
-            --white: #ffffff;
-            --muted-gold: #B5A48B; /* 과하지 않은 정제된 골드 */
-            --dark-gray: #444444;
+            --bg-main: #0a0a0a;
+            --text-white: #ffffff;
+            --muted-gold: #B5A48B;
+            --gold-gradient: linear-gradient(135deg, #E8DCC0 0%, #B5A48B 50%, #8A785D 100%);
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            overflow-x: hidden; line-height: 1.4;
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            overflow-x: hidden; word-break: keep-all; line-height: 1.6;
         }
         body.modal-open { overflow: hidden; }
+        a { text-decoration: none; color: inherit; }
+        img, video { display: block; max-width: 100%; object-fit: cover; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         /* [Header] */
         header {
-            position: fixed; top: 0; width: 100%; padding: 40px 0; z-index: 1000;
-            text-align: center;
+            position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
+            mix-blend-mode: exclusion;
+            pointer-events: none; /* 헤더 영역이 클릭을 방해하지 않도록 */
         }
+        .nav-wrap { display: flex; justify-content: center; }
         .logo { 
-            font-family: 'Montserrat', sans-serif; font-weight: 200;
-            font-size: 0.65rem; letter-spacing: 12px; /* 자간을 넓혀 고급화 */
-            text-transform: uppercase; color: rgba(255,255,255,0.5);
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 0.75rem; font-weight: 300; letter-spacing: 5px; 
+            color: rgba(255,255,255,0.8); text-transform: uppercase;
         }
 
         /* =========================================
-           [1. Hero Section - Extreme Minimalism]
+           [1. Hero Section]
            ========================================= */
         .hero {
             position: relative;
             height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center;
             overflow: hidden;
             background: #000;
         }
 
-        /* 텍스트 박스: 상단 10% 지점에 아주 작고 우아하게 배치 */
-        .hero-header {
-            position: absolute;
-            top: 12vh;
-            text-align: center;
-            z-index: 10;
+        /* 배경 (어둡게 처리하여 슬라이드 집중) */
+        .bg-video {
+            position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);
+            min-width: 100%; min-height: 100%; 
+            width: auto; height: auto;
+            z-index: -2; 
+            object-fit: cover; 
+            filter: brightness(0.25) grayscale(100%); 
         }
-        .hero-header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 100; /* 가장 얇은 폰트 */
-            font-size: 1.5rem; /* 크기를 과감하게 축소 */
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            color: var(--muted-gold);
-            margin-bottom: 15px;
+        
+        /* 
+           [수정] 제목 배치: 사진과 겹치지 않게 최상단으로 이동 
+           z-index: 1로 설정하여 사진(z-index: 5)보다 뒤에 위치하게 함 (겹쳐도 사진이 위)
+        */
+        .hero-title-wrap {
+            position: absolute; 
+            top: 10%; /* 화면 상단 10% 지점 */
+            width: 100%; text-align: center; z-index: 1; 
+            pointer-events: none;
         }
-        .hero-header p {
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            color: var(--dark-gray);
-            text-transform: uppercase;
+        .hero-title-wrap h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300; font-style: italic;
+            font-size: clamp(2rem, 4vw, 3rem); /* 크기 적당히 유지 */
+            line-height: 1; margin: 0;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0; animation: fadeDown 1.5s forwards 0.5s;
         }
 
-        /* 3D 캐러셀: 위치를 화면 하단 65% 지점으로 내려 텍스트와 분리 */
+        /* 
+           [수정] 부제 배치: 최하단으로 이동
+        */
+        .hero-subtitle-wrap {
+            position: absolute; 
+            bottom: 8%; /* 화면 하단 8% 지점 */
+            width: 100%; text-align: center; z-index: 1;
+            pointer-events: none;
+        }
+        .hero-subtitle-wrap p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem; letter-spacing: 6px;
+            color: rgba(255,255,255,0.3); /* 눈에 덜 띄게 처리 */
+            text-transform: uppercase;
+            opacity: 0; animation: fadeUp 1.5s forwards 1s;
+        }
+
+        /* 중앙 회전 슬라이드 */
         .carousel-viewport {
-            position: absolute;
-            top: 62%;
-            width: 100%; height: 450px;
+            position: absolute; 
+            top: 50%; left: 0; 
+            width: 100%; height: 600px;
+            transform: translateY(-50%);
             display: flex; justify-content: center; align-items: center;
-            perspective: 2500px;
+            perspective: 2500px; 
+            z-index: 10; /* 텍스트보다 훨씬 높은 레이어 */
             cursor: grab;
-            z-index: 5;
         }
         .carousel-viewport:active { cursor: grabbing; }
 
         .carousel-3d {
-            position: relative;
-            width: 240px; height: 340px; /* 카드는 다시 적절한 크기로 확보 */
+            position: relative; 
+            width: 280px; height: 400px; 
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.1s linear;
         }
 
         .card {
             position: absolute; width: 100%; height: 100%; left: 0; top: 0;
-            border-radius: 2px; overflow: hidden; backface-visibility: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, rgba(255,255,255,0.03));
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            border-radius: 4px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.15); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            background: #000;
         }
-        .card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: 0.5s; }
-        .card:hover img { filter: brightness(1); }
+        /* 사진/비디오 공통 스타일 */
+        .card img, .card video { 
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: brightness(0.9); /* 비포애프터 잘 보이게 밝기 유지 */
+            transition: 0.5s;
+        }
+        .card:hover img, .card:hover video { filter: brightness(1.1); transform: scale(1.05); }
+        .card:hover { border-color: rgba(255,255,255,0.8); z-index: 100; } 
 
-        /* [복구] 스크롤 아이콘: 아주 얇고 미니멀하게 */
+
+        /* 
+           [반응형 안전장치] 
+           화면 높이가 800px 이하(노트북 등)일 때 텍스트를 아예 숨겨서 사진을 보호
+        */
+        @media (max-height: 800px) {
+            .hero-title-wrap { opacity: 0.3; top: 15%; transform: scale(0.8); } 
+            .hero-subtitle-wrap { display: none; }
+        }
+        /* 화면 높이가 아주 작으면 제목도 숨김 */
+        @media (max-height: 600px) {
+            .hero-title-wrap { display: none; }
+        }
+
+        /* 스크롤 아이콘 */
         .scroll-indicator {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
             z-index: 10; opacity: 0.3;
         }
         .mouse {
-            width: 20px; height: 32px;
-            border: 1px solid #fff; border-radius: 10px;
-            position: relative;
+            width: 18px; height: 28px; border: 1px solid #fff; border-radius: 15px; position: relative;
         }
         .wheel {
-            width: 1px; height: 6px; background: #fff;
-            position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
-            animation: scroll-anim 2s infinite;
-        }
-        @keyframes scroll-anim {
-            0% { top: 6px; opacity: 1; }
-            100% { top: 18px; opacity: 0; }
+            width: 1px; height: 5px; background: #fff; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+            animation: scroll-anim 1.5s infinite;
         }
 
-        /* [이하 섹션 생략되지 않도록 핵심 구성 유지] */
-        .director { padding: 150px 0; background: #050505; border-top: 1px solid #111; }
-        .director-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 0 20px;}
-        .director-info h3 { font-size: 1.8rem; font-weight: 300; color: var(--muted-gold); margin-bottom: 25px; }
-        .history li { font-size: 0.85rem; color: #666; margin-bottom: 10px; font-weight: 300; list-style: none;}
+        @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(-20px); } }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
+        @keyframes scroll-anim { 0% { top: 6px; opacity: 1; } 100% { top: 16px; opacity: 0; } }
 
-        .floating { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
-        .btn-circle { width: 45px; height: 45px; border-radius: 50%; background: #fff; color: #000; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
-        .btn-kakao-circle { background: #FEE500; }
+        /* [Sections 2~4 생략없이 포함] */
+        .director-magazine {
+            position: relative; padding: 180px 0;
+            background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center top; background-attachment: fixed;
+            display: flex; align-items: flex-end;
+        }
+        .director-gradient {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 80%;
+            background: linear-gradient(to top, #0a0a0a 10%, rgba(10,10,10,0.8) 40%, transparent 100%); z-index: 1;
+        }
+        .director-container {
+            position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; padding: 60px 20px; text-align: left;
+        }
+        .director-title { font-size: 0.85rem; letter-spacing: 4px; color: var(--muted-gold); margin-bottom: 20px; display: block; font-weight: 300; }
+        .director-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 30px; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .director-desc { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 40px; max-width: 600px; }
+        .history-list { list-style: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; display: inline-block; }
+        .history-list li { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 8px; font-weight: 300; }
+        .history-list li::before { content: '•'; margin-right: 10px; color: var(--muted-gold); }
+
+        .portfolio-trigger { padding: 120px 0; background: #0a0a0a; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--muted-gold); margin-bottom: 10px; font-style: italic; }
+        .section-header p { color: #666; font-size: 0.9rem; font-weight: 300; }
+
+        .trigger-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+            background: #222; border: 1px solid #222; max-width: 1200px; margin: 0 auto;
+        }
+        @media (max-width: 768px) { .trigger-grid { grid-template-columns: 1fr; } }
+        .pf-card { position: relative; height: 450px; overflow: hidden; cursor: pointer; background: #111; }
+        .pf-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s; opacity: 0.6; filter: grayscale(100%); }
+        .pf-card:hover img { transform: scale(1.05); opacity: 0.3; filter: grayscale(0%); }
+        .card-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; pointer-events: none; }
+        .card-title { font-size: 1.4rem; font-weight: 400; margin-bottom: 10px; letter-spacing: 2px; color: #fff; }
+        .card-line { width: 30px; height: 1px; background: var(--muted-gold); margin-bottom: 15px; }
+        .card-desc { font-size: 0.85rem; color: #ccc; font-weight: 300; margin-bottom: 25px; }
+        .click-indicator { padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.75rem; color: #fff; font-weight: 300; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 20; transition: 0.3s; }
+        .close-btn:hover { transform: rotate(90deg); color: var(--muted-gold); }
+        .slider-wrapper { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative;}
+        .slide-item { display: none; width: 90%; max-width: 1000px; align-items: center; gap: 40px; }
+        .slide-item.active { display: flex; animation: fadeIn 0.5s; }
+        @media (max-width: 900px) { .slide-item { flex-direction: column; text-align: center; } }
+        .slide-img-box { flex: 1.5; height: 50vh; overflow: hidden; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .slide-img-box img { width: 100%; height: 100%; object-fit: contain; background: #050505; }
+        .slide-info { flex: 1; color: #fff; }
+        .slide-info h3 { font-size: 1.8rem; font-weight: 400; margin-bottom: 15px; color: var(--muted-gold); }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: transparent; color: #555; border: none; cursor: pointer; font-size: 3rem; padding: 20px; }
+        .nav-btn:hover { color: #fff; } .prev-btn { left: 20px; } .next-btn { right: 20px; }
+
+        .faq { padding: 100px 0; background: #050505; border-top: 1px solid #111; }
+        .faq-item { border-bottom: 1px solid #222; padding: 25px 0; cursor: pointer; }
+        .faq-q { display: flex; justify-content: space-between; font-size: 1rem; color: #ccc; font-weight: 300; }
+        .faq-q:hover { color: var(--muted-gold); }
+        .faq-a { max-height: 0; overflow: hidden; color: #777; transition: 0.3s; margin-top: 5px; font-size: 0.9rem; }
+        .faq-item.active .faq-a { max-height: 200px; padding-top: 15px; }
+
+        .floating-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 999; }
+        .f-btn { padding: 12px 30px; border-radius: 50px; font-weight: 500; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 8px; font-size: 0.85rem; backdrop-filter: blur(10px); transition: 0.3s; }
+        .f-btn:hover { transform: translateY(-3px); }
+        .btn-insta { background: rgba(255,255,255,0.9); color: #000; }
+        .btn-kakao { background: rgba(254, 229, 0, 0.9); color: #3b1e1e; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">BY SONG SCALP</div>
+        <div class="nav-wrap">
+            <div class="logo">BY SONG SCALP</div>
+        </div>
     </header>
 
+    <!-- [HERO SECTION] -->
     <section class="hero">
-        <div class="hero-header" data-aos="fade-down" data-aos-duration="2000">
-            <h1>Rewrite your worth</h1>
-            <p>The Premium Scalp Artistry</p>
+        <video class="bg-video" autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/3692634/3692634-uhd_2560_1440_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
+        <!-- 1. 제목 (최상단) -->
+        <div class="hero-title-wrap">
+            <h1>Rewrite Your Worth</h1>
         </div>
 
+        <!-- 2. 중앙 슬라이드 (사진 & 영상 혼합) -->
         <div class="carousel-viewport" id="drag-area">
             <div class="carousel-3d" id="carousel">
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+01"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+02"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+03"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+04"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+05"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+06"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+07"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+08"></div>
+                <!-- 
+                    [TIP] 영상은 3개 정도만 사용하세요 (성능 최적화)
+                    나머지는 이미지로 구성하는 것이 좋습니다.
+                -->
+                <!-- Card 1: 비디오 예시 (muted, autoplay 필수) -->
+                <div class="card">
+                    <video autoplay muted loop playsinline>
+                        <!-- 여기에 준비하신 1~2MB 크기의 최적화된 영상 링크를 넣으세요 -->
+                        <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- Card 2: 비디오 예시 -->
+                <div class="card">
+                     <video autoplay muted loop playsinline>
+                        <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- Card 3: 이미지 -->
+                <div class="card"><img src="https://via.placeholder.com/640x960/111/fff?text=Case+03"></div>
+                <!-- Card 4: 이미지 -->
+                <div class="card"><img src="https://via.placeholder.com/640x960/111/fff?text=Case+04"></div>
+                <!-- Card 5: 이미지 -->
+                <div class="card"><img src="https://via.placeholder.com/640x960/111/fff?text=Case+05"></div>
+                <!-- Card 6: 비디오 예시 -->
+                <div class="card">
+                     <video autoplay muted loop playsinline>
+                        <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- Card 7: 이미지 -->
+                <div class="card"><img src="https://via.placeholder.com/640x960/111/fff?text=Case+07"></div>
+                <!-- Card 8: 이미지 -->
+                <div class="card"><img src="https://via.placeholder.com/640x960/111/fff?text=Case+08"></div>
             </div>
         </div>
 
+        <!-- 3. 부제 (최하단) -->
+        <div class="hero-subtitle-wrap">
+            <p>The Premium Scalp Artistry</p>
+        </div>
+
+        <!-- 4. 스크롤 아이콘 -->
         <div class="scroll-indicator">
             <div class="mouse"><div class="wheel"></div></div>
         </div>
     </section>
 
-    <section class="director">
-        <div class="director-grid">
-            <div style="filter: grayscale(100%); opacity: 0.6;" data-aos="fade-up">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Master">
+    <!-- [DIRECTOR SECTION] -->
+    <section class="director-magazine">
+        <div class="director-gradient"></div> 
+        <div class="director-container" data-aos="fade-up">
+            <span class="director-title">MASTER DIRECTOR</span>
+            <h3 class="director-quote">"단 하나의 점도<br>의미 없이 찍지 않습니다."</h3>
+            <p class="director-desc">
+                SMP는 단순한 미용 시술이 아닌 정교한 디자인입니다.<br>
+                고객님의 고유한 분위기와 두상을 정밀 분석하여<br>
+                가장 자연스러운 아름다움을 찾아드립니다.
+            </p>
+            <ul class="history-list">
+                <li>THE BLACK 대표원장</li>
+                <li>국제 SMP 전문가 협회(ISPA) 정회원</li>
+                <li>K-Beauty 두피문신 디자인 부문 대상</li>
+                <li>미술대학 서양화 전공 (디자인 색채학 수료)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- [PORTFOLIO SECTION] -->
+    <section class="portfolio-trigger">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>PORTFOLIO</h2>
+                <p>확인하고 싶은 시술 사례를 선택하세요.</p>
             </div>
-            <div data-aos="fade-up" data-aos-delay="200">
-                <span style="font-size: 0.65rem; letter-spacing: 4px; color: #444; margin-bottom: 20px; display: block;">ESTABLISHED 2018</span>
-                <h3>Beyond the Art</h3>
-                <p style="color:#666; font-size: 0.9rem; font-weight: 300; margin-bottom: 30px;">단순한 문신이 아닌, 당신의 잃어버린 가치를 되찾아주는 정교한 디자인 작업을 수행합니다.</p>
-                <ul class="history">
-                    <li>• THE BLACK Master Director</li>
-                    <li>• ISPA Certified Specialist</li>
-                    <li>• Scalp Design Award Winner</li>
-                </ul>
+
+            <div class="trigger-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="pf-card" onclick="openModal('hairline')">
+                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="헤어라인">
+                    <div class="card-content">
+                        <span class="card-title">HAIRLINE</span>
+                        <div class="card-line"></div>
+                        <span class="card-desc">헤어라인 / M자 / 구레나룻</span>
+                        <div class="click-indicator">View Detail</div>
+                    </div>
+                </div>
+                <div class="pf-card" onclick="openModal('density')">
+                    <img src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="밀도보강">
+                    <div class="card-content">
+                        <span class="card-title">DENSITY</span>
+                        <div class="card-line"></div>
+                        <span class="card-desc">정수리 / 가르마 / 숱채움</span>
+                        <div class="click-indicator">View Detail</div>
+                    </div>
+                </div>
+                <div class="pf-card" onclick="openModal('scar')">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="삭발/흉터">
+                    <div class="card-content">
+                        <span class="card-title">SCAR COVER</span>
+                        <div class="card-line"></div>
+                        <span class="card-desc">흉터 커버 / 삭발 디자인</span>
+                        <div class="click-indicator">View Detail</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <div class="floating">
-        <div class="btn-circle" onclick="window.open('https://instagram.com')"><i class="fab fa-instagram"></i></div>
-        <div class="btn-circle btn-kakao-circle" onclick="alert('카톡 연결')"><i class="fas fa-comment"></i></div>
+    <!-- [MODAL] -->
+    <div id="portfolio-modal" class="modal-overlay">
+        <div class="close-btn" onclick="closeModal()">&times;</div>
+        <div class="slider-wrapper">
+            <button class="nav-btn prev-btn" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <div id="slider-track" style="width:100%; display:flex; justify-content:center;"></div>
+            <button class="nav-btn next-btn" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
     </div>
 
+    <!-- [FAQ] -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header" style="margin-bottom:40px;"><h2>Q&A</h2></div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-q">Q. 정말 티가 안 나나요? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a">A. 네, 기존 모발 굵기와 패턴을 분석하여 시술하므로 매우 자연스럽습니다.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-q">Q. 통증이나 붓기는 없나요? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a">A. 따끔한 정도이며, 시술 직후 일상생활이 바로 가능할 정도로 붓기가 적습니다.</div>
+            </div>
+            <div class="faq-item" onclick="this.classList.toggle('active')">
+                <div class="faq-q">Q. 유지기간은 얼마나 되나요? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-a">A. 평균 5~7년 이상 유지되며, 색이 옅어질 경우 리터치로 반영구적 유지가 가능합니다.</div>
+            </div>
+            <div style="text-align:center; margin-top:60px; color:#444; font-size:0.8rem;">
+                <p>BY SONG SCALP | Copyright 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- [Floating Bar] -->
+    <div class="floating-bar">
+        <div class="f-btn btn-insta" onclick="alert('인스타그램')"><i class="fab fa-instagram"></i> 포트폴리오</div>
+        <div class="f-btn btn-kakao" onclick="alert('카톡상담')"><i class="fas fa-comment"></i> 상담하기</div>
+    </div>
+
+    <!-- [SCRIPTS] -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        AOS.init({ duration: 1200, once: true });
 
+        /* 3D Carousel Logic */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
         const count = cards.length;
@@ -197,19 +422,21 @@
         let startX = 0;
         let lastRotation = 0;
 
-        // 초기 배치: 3D 반경을 550px로 넓게 잡아 쾌적한 느낌 부여
+        // 반지름 500px
+        const radius = 500; 
+
+        // 초기 배치
         cards.forEach((card, i) => {
-            card.style.transform = `rotateY(${i * angle}deg) translateZ(550px)`;
+            card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
         });
 
-        // 자동 회전 (매우 천천히)
+        // 자동 회전
         let autoDrive = setInterval(() => {
-            rotation -= 0.15;
+            rotation -= 0.15; 
             carousel.style.transform = `rotateY(${rotation}deg)`;
         }, 30);
 
         const dragArea = document.getElementById('drag-area');
-        
         const onStart = (e) => {
             isDragging = true;
             startX = e.pageX || e.touches[0].pageX;
@@ -219,7 +446,7 @@
         const onMove = (e) => {
             if(!isDragging) return;
             const x = e.pageX || e.touches[0].pageX;
-            rotation = lastRotation + (x - startX) * 0.15;
+            rotation = lastRotation + (x - startX) * 0.2;
             carousel.style.transform = `rotateY(${rotation}deg)`;
         };
         const onEnd = () => {
@@ -236,6 +463,66 @@
         dragArea.addEventListener('touchstart', onStart);
         dragArea.addEventListener('touchmove', onMove);
         window.addEventListener('touchend', onEnd);
+
+
+        /* Modal Logic */
+        const portfolioData = {
+            'hairline': [
+                { title: 'M자 헤어라인 교정', desc: '자연스러운 그라데이션 기법 적용', img: 'https://via.placeholder.com/800x600/111/fff?text=Hairline+1' },
+                { title: '측두부 라인 디자인', desc: '구레나룻과 이어지는 입체적 라인', img: 'https://via.placeholder.com/800x600/222/fff?text=Hairline+2' }
+            ],
+            'density': [
+                { title: '정수리 밀도보강', desc: '비어 보이는 두피를 완벽하게 커버', img: 'https://via.placeholder.com/800x600/111/d4af37?text=Density+1' },
+                { title: '가르마 숱채움', desc: '여성 가르마 라인 집중 커버', img: 'https://via.placeholder.com/800x600/222/d4af37?text=Density+2' }
+            ],
+            'scar': [
+                { title: '두피 흉터 커버', desc: '이식 및 절개 흉터 90% 이상 커버', img: 'https://via.placeholder.com/800x600/111/999?text=Scar+1' },
+                { title: '삭발 디자인', desc: '전체 삭발 스타일링', img: 'https://via.placeholder.com/800x600/222/999?text=Scar+2' }
+            ]
+        };
+
+        let currentSlideIndex = 0;
+        let currentCategory = [];
+
+        function openModal(category) {
+            const modal = document.getElementById('portfolio-modal');
+            currentCategory = portfolioData[category];
+            currentSlideIndex = 0;
+            renderSlide();
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function renderSlide() {
+            const track = document.getElementById('slider-track');
+            const item = currentCategory[currentSlideIndex];
+            track.innerHTML = `
+                <div class="slide-item active">
+                    <div class="slide-img-box"><img src="${item.img}"></div>
+                    <div class="slide-info">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                        <p style="margin-top:10px; font-size:0.8rem; color:#666;">${currentSlideIndex + 1} / ${currentCategory.length}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeModal() {
+            document.getElementById('portfolio-modal').classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        function moveSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex >= currentCategory.length) currentSlideIndex = 0;
+            if (currentSlideIndex < 0) currentSlideIndex = currentCategory.length - 1;
+            renderSlide();
+        }
+
+        document.getElementById('portfolio-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
     </script>
 </body>
 </html>
