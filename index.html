@@ -1,241 +1,125 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BY SONG SCALP | Minimalism</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    :root {
+        --bg: #050505;
+        --white: #ffffff;
+        --muted-gold: #B5A48B; /* 과하지 않은 정제된 골드 */
+        --dark-gray: #444444;
+    }
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200&family=Noto+Sans+KR:wght@100;300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background-color: var(--bg);
+        color: var(--white);
+        overflow-x: hidden; line-height: 1.4;
+    }
+    body.modal-open { overflow: hidden; }
 
-    <style>
-        :root {
-            --bg: #050505;
-            --white: #ffffff;
-            --muted-gold: #B5A48B; /* 과하지 않은 정제된 골드 */
-            --dark-gray: #444444;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg);
-            color: var(--white);
-            overflow-x: hidden; line-height: 1.4;
-        }
-        body.modal-open { overflow: hidden; }
+    /* [Header] */
+    header {
+        position: fixed; top: 0; width: 100%; padding: 40px 0; z-index: 1000;
+        text-align: center;
+    }
+    .logo { 
+        font-family: 'Montserrat', sans-serif; font-weight: 200;
+        font-size: 0.65rem; letter-spacing: 12px; /* 자간을 넓혀 고급화 */
+        text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
 
-        /* [Header] */
-        header {
-            position: fixed; top: 0; width: 100%; padding: 40px 0; z-index: 1000;
-            text-align: center;
-        }
-        .logo { 
-            font-family: 'Montserrat', sans-serif; font-weight: 200;
-            font-size: 0.65rem; letter-spacing: 12px; /* 자간을 넓혀 고급화 */
-            text-transform: uppercase; color: rgba(255,255,255,0.5);
-        }
+    /* =========================================
+       [1. Hero Section - Extreme Minimalism]
+       ========================================= */
+    .hero {
+        position: relative;
+        height: 100vh; width: 100%;
+        display: flex; flex-direction: column; align-items: center;
+        overflow: hidden;
+        background: #000;
+    }
 
-        /* =========================================
-           [1. Hero Section - Extreme Minimalism]
-           ========================================= */
-        .hero {
-            position: relative;
-            height: 100vh; width: 100%;
-            display: flex; flex-direction: column; align-items: center;
-            overflow: hidden;
-            background: #000;
-        }
+    /* 텍스트 박스: 상단 10% 지점에 아주 작고 우아하게 배치 */
+    .hero-header {
+        position: absolute;
+        top: 12vh;
+        text-align: center;
+        z-index: 10;
+    }
+    .hero-header h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 100; /* 가장 얇은 폰트 */
+        font-size: 1.5rem; /* 크기를 과감하게 축소 */
+        letter-spacing: 10px;
+        text-transform: uppercase;
+        color: var(--muted-gold);
+        margin-bottom: 15px;
+    }
+    .hero-header p {
+        font-size: 0.65rem;
+        letter-spacing: 4px;
+        color: var(--dark-gray);
+        text-transform: uppercase;
+    }
 
-        /* 텍스트 박스: 상단 10% 지점에 아주 작고 우아하게 배치 */
-        .hero-header {
-            position: absolute;
-            top: 12vh;
-            text-align: center;
-            z-index: 10;
-        }
-        .hero-header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 100; /* 가장 얇은 폰트 */
-            font-size: 1.5rem; /* 크기를 과감하게 축소 */
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            color: var(--muted-gold);
-            margin-bottom: 15px;
-        }
-        .hero-header p {
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            color: var(--dark-gray);
-            text-transform: uppercase;
-        }
+    /* 3D 캐러셀: 위치를 화면 하단 65% 지점으로 내려 텍스트와 분리 */
+    .carousel-viewport {
+        position: absolute;
+        top: 62%;
+        width: 100%; height: 450px;
+        display: flex; justify-content: center; align-items: center;
+        perspective: 2500px;
+        cursor: grab;
+        z-index: 5;
+    }
+    .carousel-viewport:active { cursor: grabbing; }
 
-        /* 3D 캐러셀: 위치를 화면 하단 65% 지점으로 내려 텍스트와 분리 */
-        .carousel-viewport {
-            position: absolute;
-            top: 62%;
-            width: 100%; height: 450px;
-            display: flex; justify-content: center; align-items: center;
-            perspective: 2500px;
-            cursor: grab;
-            z-index: 5;
-        }
-        .carousel-viewport:active { cursor: grabbing; }
+    .carousel-3d {
+        position: relative;
+        width: 240px; height: 340px; /* 카드는 다시 적절한 크기로 확보 */
+        transform-style: preserve-3d;
+        transition: transform 0.1s ease-out;
+    }
 
-        .carousel-3d {
-            position: relative;
-            width: 240px; height: 340px; /* 카드는 다시 적절한 크기로 확보 */
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-        }
+    .card {
+        position: absolute; width: 100%; height: 100%; left: 0; top: 0;
+        border-radius: 2px; overflow: hidden; backface-visibility: hidden;
+        border: 1px solid rgba(255,255,255,0.05);
+        -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, rgba(255,255,255,0.03));
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: 0.5s; }
+    .card:hover img { filter: brightness(1); }
 
-        .card {
-            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
-            border-radius: 2px; overflow: hidden; backface-visibility: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, rgba(255,255,255,0.03));
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-        }
-        .card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: 0.5s; }
-        .card:hover img { filter: brightness(1); }
+    /* [복구] 스크롤 아이콘: 아주 얇고 미니멀하게 */
+    .scroll-indicator {
+        position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+        z-index: 10; opacity: 0.3;
+    }
+    .mouse {
+        width: 20px; height: 32px;
+        border: 1px solid #fff; border-radius: 10px;
+        position: relative;
+    }
+    .wheel {
+        width: 1px; height: 6px; background: #fff;
+        position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+        animation: scroll-anim 2s infinite;
+    }
+    @keyframes scroll-anim {
+        0% { top: 6px; opacity: 1; }
+        100% { top: 18px; opacity: 0; }
+    }
 
-        /* [복구] 스크롤 아이콘: 아주 얇고 미니멀하게 */
-        .scroll-indicator {
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-            z-index: 10; opacity: 0.3;
-        }
-        .mouse {
-            width: 20px; height: 32px;
-            border: 1px solid #fff; border-radius: 10px;
-            position: relative;
-        }
-        .wheel {
-            width: 1px; height: 6px; background: #fff;
-            position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
-            animation: scroll-anim 2s infinite;
-        }
-        @keyframes scroll-anim {
-            0% { top: 6px; opacity: 1; }
-            100% { top: 18px; opacity: 0; }
-        }
+    /* [이하 섹션 생략되지 않도록 핵심 구성 유지] */
+    .director { padding: 150px 0; background: #050505; border-top: 1px solid #111; }
+    .director-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 0 20px;}
+    .director-info h3 { font-size: 1.8rem; font-weight: 300; color: var(--muted-gold); margin-bottom: 25px; }
+    .history li { font-size: 0.85rem; color: #666; margin-bottom: 10px; font-weight: 300; list-style: none;}
 
-        /* [이하 섹션 생략되지 않도록 핵심 구성 유지] */
-        .director { padding: 150px 0; background: #050505; border-top: 1px solid #111; }
-        .director-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1000px; margin: 0 auto; padding: 0 20px;}
-        .director-info h3 { font-size: 1.8rem; font-weight: 300; color: var(--muted-gold); margin-bottom: 25px; }
-        .history li { font-size: 0.85rem; color: #666; margin-bottom: 10px; font-weight: 300; list-style: none;}
-
-        .floating { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
-        .btn-circle { width: 45px; height: 45px; border-radius: 50%; background: #fff; color: #000; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
-        .btn-kakao-circle { background: #FEE500; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">BY SONG SCALP</div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-header" data-aos="fade-down" data-aos-duration="2000">
-            <h1>Rewrite your worth</h1>
-            <p>The Premium Scalp Artistry</p>
-        </div>
-
-        <div class="carousel-viewport" id="drag-area">
-            <div class="carousel-3d" id="carousel">
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+01"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+02"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+03"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+04"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+05"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+06"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+07"></div>
-                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=Case+08"></div>
-            </div>
-        </div>
-
-        <div class="scroll-indicator">
-            <div class="mouse"><div class="wheel"></div></div>
-        </div>
-    </section>
-
-    <section class="director">
-        <div class="director-grid">
-            <div style="filter: grayscale(100%); opacity: 0.6;" data-aos="fade-up">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Master">
-            </div>
-            <div data-aos="fade-up" data-aos-delay="200">
-                <span style="font-size: 0.65rem; letter-spacing: 4px; color: #444; margin-bottom: 20px; display: block;">ESTABLISHED 2018</span>
-                <h3>Beyond the Art</h3>
-                <p style="color:#666; font-size: 0.9rem; font-weight: 300; margin-bottom: 30px;">단순한 문신이 아닌, 당신의 잃어버린 가치를 되찾아주는 정교한 디자인 작업을 수행합니다.</p>
-                <ul class="history">
-                    <li>• THE BLACK Master Director</li>
-                    <li>• ISPA Certified Specialist</li>
-                    <li>• Scalp Design Award Winner</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <div class="floating">
-        <div class="btn-circle" onclick="window.open('https://instagram.com')"><i class="fab fa-instagram"></i></div>
-        <div class="btn-circle btn-kakao-circle" onclick="alert('카톡 연결')"><i class="fas fa-comment"></i></div>
-    </div>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-
-        const carousel = document.getElementById('carousel');
-        const cards = document.querySelectorAll('.card');
-        const count = cards.length;
-        const angle = 360 / count;
-        let rotation = 0;
-        let isDragging = false;
-        let startX = 0;
-        let lastRotation = 0;
-
-        // 초기 배치: 3D 반경을 550px로 넓게 잡아 쾌적한 느낌 부여
-        cards.forEach((card, i) => {
-            card.style.transform = `rotateY(${i * angle}deg) translateZ(550px)`;
-        });
-
-        // 자동 회전 (매우 천천히)
-        let autoDrive = setInterval(() => {
-            rotation -= 0.15;
-            carousel.style.transform = `rotateY(${rotation}deg)`;
-        }, 30);
-
-        const dragArea = document.getElementById('drag-area');
-        
-        const onStart = (e) => {
-            isDragging = true;
-            startX = e.pageX || e.touches[0].pageX;
-            lastRotation = rotation;
-            clearInterval(autoDrive);
-        };
-        const onMove = (e) => {
-            if(!isDragging) return;
-            const x = e.pageX || e.touches[0].pageX;
-            rotation = lastRotation + (x - startX) * 0.15;
-            carousel.style.transform = `rotateY(${rotation}deg)`;
-        };
-        const onEnd = () => {
-            isDragging = false;
-            autoDrive = setInterval(() => {
-                rotation -= 0.15;
-                carousel.style.transform = `rotateY(${rotation}deg)`;
-            }, 30);
-        };
-
-        dragArea.addEventListener('mousedown', onStart);
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseup', onEnd);
-        dragArea.addEventListener('touchstart', onStart);
-        dragArea.addEventListener('touchmove', onMove);
-        window.addEventListener('touchend', onEnd);
-    </script>
-</body>
-</html>
+    .floating { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
+    .btn-circle { width: 45px; height: 45px; border-radius: 50%; background: #fff; color: #000; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+    .btn-kakao-circle { background: #FEE500; }
+</style>
