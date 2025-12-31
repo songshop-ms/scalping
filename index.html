@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BY SONG SCALP | Rewrite your worth</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #050505;
+            --bg: #0f0f0f; /* 더 깊이감 있는 블랙 */
             --white: #ffffff;
-            --gray: #888888;
-            /* 덜 화려하고 미니멀한 뮤트 골드 색상 정의 */
-            --muted-gold: #C5B358; 
+            --gray: #666666;
+            /* 전면 수정된 색상: 은은하고 고급스러운 샌드 골드 */
+            --point-gold: #B5A48B; 
+            --soft-gold: #D4C4A8;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,17 +30,17 @@
 
         /* [Header] */
         header {
-            position: fixed; top: 0; width: 100%; padding: 30px 0; z-index: 1000;
+            position: fixed; top: 0; width: 100%; padding: 40px 0; z-index: 1000;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
         }
         .logo { 
-            font-size: 0.9rem; font-weight: 400; letter-spacing: 4px; 
+            font-size: 0.85rem; font-weight: 300; letter-spacing: 8px; 
             text-transform: uppercase; color: var(--white);
+            opacity: 0.9;
         }
 
         /* =========================================
-           [1. Hero Section - Minimal & Faster & Separated]
+           [1. Hero Section - Refined Design]
            ========================================= */
         .hero {
             position: relative;
@@ -47,47 +48,46 @@
             display: flex; flex-direction: column; 
             align-items: center;
             overflow: hidden;
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            background: radial-gradient(circle at 50% 40%, #1a1a1a 0%, #050505 100%);
         }
 
-        /* 타이틀 섹션: 로고와 폰트 통일, 크기 축소, 미니멀 골드 적용 */
+        /* 폰트 디자인 전면 수정: Rewrite your worth */
         .hero-header {
             position: absolute;
-            top: 15%; /* 상단 고정 */
+            top: 15%; /* 상단 배치로 카드와 간격 유지 */
             text-align: center;
             z-index: 10;
-            width: 100%;
         }
         .hero-header h1 {
-            font-family: 'Noto Sans KR', sans-serif; /* 로고와 동일한 폰트 */
-            font-weight: 300; /* 얇은 두께로 세련됨 강조 */
-            font-size: clamp(1.8rem, 3vw, 2.5rem); /* 크기 축소 */
-            letter-spacing: 2px;
-            color: var(--muted-gold); /* 단색 뮤트 골드 적용 */
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 100; /* 극도로 얇은 두께로 미니멀리즘 극대화 */
+            letter-spacing: 6px;
+            color: var(--soft-gold);
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .hero-header .sub-line {
+            width: 40px; height: 1px; background: var(--point-gold);
+            margin: 0 auto 20px; opacity: 0.5;
         }
         .hero-header p {
-            font-size: 0.9rem; letter-spacing: 1px; color: var(--gray); font-weight: 300;
+            font-size: 0.8rem; letter-spacing: 2px; color: var(--gray); font-weight: 300;
+            text-transform: uppercase;
         }
 
-        /* 3D 캐러셀 뷰포트: 위치를 중앙 하단으로 내려 텍스트와 분리 */
+        /* 카드 슬라이드: 크기 재조정 및 위치 최적화 */
         .carousel-viewport {
             position: absolute;
-            top: 55%; /* 화면 중앙보다 약간 아래에서 시작 */
-            left: 50%; transform: translateX(-50%);
-            width: 100%; height: 400px;
+            top: 52%; /* 폰트와 겹치지 않으면서도 존재감 있는 위치 */
+            width: 100%; height: 500px;
             display: flex; justify-content: center; align-items: center;
-            perspective: 2000px;
+            perspective: 2500px;
             cursor: grab;
-            z-index: 1; /* 텍스트보다 뒤에 배치 */
         }
-        .carousel-viewport:active { cursor: grabbing; }
 
-        /* 캐러셀 아이템 크기 축소 */
         .carousel-3d {
             position: relative;
-            width: 200px; height: 280px; /* 크기 줄임 */
+            width: 260px; height: 360px; /* 카드 크기 적절히 확대 */
             transform-style: preserve-3d;
             transition: transform 0.1s ease-out;
         }
@@ -96,52 +96,30 @@
             position: absolute;
             width: 100%; height: 100%;
             left: 0; top: 0;
-            border-radius: 8px;
+            border-radius: 2px; /* 더 날카롭고 세련된 직사각형 */
             overflow: hidden;
             backface-visibility: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            /* 반사 효과 */
-            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, rgba(255,255,255,0.1));
-            background: #000;
+            border: 1px solid rgba(181, 164, 139, 0.2); /* 샌드 골드 테두리 살짝 */
+            -webkit-box-reflect: below 20px linear-gradient(transparent, transparent, rgba(255,255,255,0.05));
         }
-        .card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%); transition: 0.5s; }
-        .card:hover img { filter: grayscale(0%); }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 드래그 안내 문구 하단 배치 */
         .drag-guide {
-            position: absolute; bottom: 40px; width: 100%; text-align: center;
-            color: var(--gray); font-size: 0.75rem; letter-spacing: 2px;
-            pointer-events: none;
+            position: absolute; bottom: 50px; color: var(--gray);
+            font-size: 0.7rem; letter-spacing: 4px; font-weight: 300;
         }
 
-        /* [나머지 섹션 스타일 유지] */
-        .director { padding: 180px 0; background: #050505; }
-        .director-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 80px; align-items: center; }
-        @media (max-width: 900px) { .director-grid { grid-template-columns: 1fr; gap: 50px; } }
-        .director-img { filter: grayscale(100%); opacity: 0.9; border-radius: 4px; overflow: hidden; }
-        .director-info span { color: var(--muted-gold); letter-spacing: 3px; font-size: 0.8rem; display: block; margin-bottom: 20px; }
-        .director-info h3 { font-size: 2.2rem; font-weight: 300; margin-bottom: 30px; line-height: 1.3; }
-        .director-info p { color: var(--gray); font-weight: 300; margin-bottom: 40px; }
-        .history li { font-size: 0.9rem; color: #aaa; margin-bottom: 10px; font-weight: 300; display: flex; align-items: center; }
-        .history li::before { content:''; width: 4px; height: 4px; background: var(--muted-gold); border-radius: 50%; margin-right: 10px; }
+        /* [이하 섹션 색상 톤 통일] */
+        .director { padding: 180px 0; background: #080808; }
+        .director-info h3 { font-size: 2.5rem; font-weight: 300; color: var(--soft-gold); margin-bottom: 30px; }
+        .history li::before { background: var(--point-gold); }
 
-        .portfolio { padding: 150px 0; background: #000; }
-        .pf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        @media (max-width: 768px) { .pf-grid { grid-template-columns: 1fr; } }
-        .pf-card { position: relative; aspect-ratio: 3/4; background: #0a0a0a; overflow: hidden; cursor: pointer; border-radius: 4px; }
-        .pf-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.6s; }
-        .pf-card:hover img { opacity: 0.8; transform: scale(1.03); }
-        .pf-info { position: absolute; bottom: 25px; left: 25px; z-index: 2; }
-        .pf-info h4 { font-size: 1rem; font-weight: 400; letter-spacing: 2px; margin-bottom: 5px; }
-        .pf-info span { font-size: 0.7rem; color: var(--muted-gold); letter-spacing: 1px; }
+        .portfolio { padding: 150px 0; background: #050505; }
+        .pf-info span { color: var(--point-gold); }
 
         .floating { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
-        .btn-circle { width: 55px; height: 55px; border-radius: 50%; background: #fff; color: #000; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: 0.3s; }
-        .btn-circle:hover { transform: scale(1.1); }
-        .btn-kakao-circle { background: #FEE500; color: #3b1e1e; }
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; display:none; align-items:center; justify-content:center; }
-        .modal.active { display:flex; }
-        .close-btn { position:absolute; top:30px; right:30px; font-size:2rem; cursor:pointer; color: var(--white); }
+        .btn-circle { width: 50px; height: 50px; border-radius: 50%; background: var(--soft-gold); color: #000; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn-kakao-circle { background: #FEE500; }
     </style>
 </head>
 <body>
@@ -151,72 +129,43 @@
     </header>
 
     <section class="hero">
-        <div class="hero-header" data-aos="fade-down" data-aos-duration="1200">
+        <div class="hero-header" data-aos="fade-up">
             <h1>Rewrite your worth</h1>
-            <p>압도적인 자연스러움으로 당신의 가치를 다시 쓰다</p>
+            <div class="sub-line"></div>
+            <p>The Premium Scalp Artistry</p>
         </div>
 
         <div class="carousel-viewport" id="drag-area">
             <div class="carousel-3d" id="carousel">
-                <div class="card"><img src="https://via.placeholder.com/400x560/222/fff?text=BEFORE" alt="1"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/333/fff?text=AFTER" alt="2"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/222/fff?text=BEFORE" alt="3"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/333/fff?text=AFTER" alt="4"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/222/fff?text=BEFORE" alt="5"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/333/fff?text=AFTER" alt="6"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/222/fff?text=BEFORE" alt="7"></div>
-                <div class="card"><img src="https://via.placeholder.com/400x560/333/fff?text=AFTER" alt="8"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=BEFORE"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=AFTER"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=BEFORE"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=AFTER"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=BEFORE"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=AFTER"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=BEFORE"></div>
+                <div class="card"><img src="https://via.placeholder.com/500x700/111/fff?text=AFTER"></div>
             </div>
         </div>
 
-        <div class="drag-guide">
-            <p>DRAG TO EXPLORE</p>
-        </div>
+        <div class="drag-guide">DRAG TO ROTATE</div>
     </section>
 
     <section class="director">
         <div class="container">
-            <div class="director-grid">
-                <div class="director-img" data-aos="fade-up">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" alt="Master">
+            <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;">
+                <div style="filter: grayscale(100%); opacity: 0.8;" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80">
                 </div>
-                <div class="director-info" data-aos="fade-up" data-aos-delay="100">
-                    <span>MASTER DIRECTOR</span>
-                    <h3>"단 하나의 점도<br>의미 없이 찍지 않습니다."</h3>
-                    <p>고객이 잃어버렸던 본연의 이미지를 복원하는 작업, 정교함이 곧 신뢰입니다.</p>
-                    <ul class="history">
-                        <li>THE BLACK 대표원장</li>
-                        <li>국제 SMP 전문가 협회(ISPA) 정회원</li>
-                        <li>K-Beauty 디자인 부문 대상 수상</li>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <span style="color:var(--point-gold); letter-spacing: 5px; font-size: 0.75rem;">MASTER DIRECTOR</span>
+                    <h3 style="margin-top:20px;">예술과 기술의 경계에서<br>당신의 가치를 완성합니다.</h3>
+                    <p style="color:#888; margin-bottom:40px; font-weight:300;">단순한 시술이 아닌, 고객의 고유한 분위기를 분석하여 가장 자연스러운 입체감을 구현합니다.</p>
+                    <ul class="history" style="list-style:none;">
+                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">• THE BLACK 대표원장</li>
+                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">• 국제 SMP 전문가 협회(ISPA) 정회원</li>
+                        <li style="margin-bottom:15px; font-weight:300; font-size:0.9rem;">• K-Beauty Scalp Design 대상 수상</li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="portfolio">
-        <div class="container">
-            <div class="pf-grid" data-aos="fade-up">
-                <div class="pf-card" onclick="openModal('hairline')">
-                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&w=600">
-                    <div class="pf-info">
-                        <h4>HAIRLINE</h4>
-                        <span>M자 / 헤어라인 교정</span>
-                    </div>
-                </div>
-                <div class="pf-card" onclick="openModal('density')">
-                    <img src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&w=600">
-                    <div class="pf-info">
-                        <h4>DENSITY</h4>
-                        <span>정수리 / 가르마 밀도보강</span>
-                    </div>
-                </div>
-                <div class="pf-card" onclick="openModal('scar')">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&w=600">
-                    <div class="pf-info">
-                        <h4>SCAR COVER</h4>
-                        <span>흉터 커버 / 삭발 디자인</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -224,18 +173,13 @@
 
     <div class="floating">
         <div class="btn-circle" onclick="window.open('https://instagram.com')"><i class="fab fa-instagram"></i></div>
-        <div class="btn-circle btn-kakao-circle" onclick="alert('카톡 연결')"><i class="fas fa-comment-dots"></i></div>
-    </div>
-    <div class="modal" id="modal">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div id="modal-content" style="color:#fff; text-align:center;">준비중입니다.</div>
+        <div class="btn-circle btn-kakao-circle" onclick="alert('카톡 연결')"><i class="fas fa-comment"></i></div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
 
-        /* [3D 캐러셀 로직] */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
         const count = cards.length;
@@ -245,14 +189,13 @@
         let startX = 0;
         let lastRotation = 0;
 
-        // 초기 배치: 카드 크기가 줄었으므로 반경(translateZ)도 축소 (550px -> 380px)
+        // 카드 크기에 맞춰 회전 반경(translateZ)을 500px로 재조정
         cards.forEach((card, i) => {
-            card.style.transform = `rotateY(${i * angle}deg) translateZ(380px)`;
+            card.style.transform = `rotateY(${i * angle}deg) translateZ(500px)`;
         });
 
-        // 자동 회전 속도 증가 (0.1 -> 0.3)
         let autoDrive = setInterval(() => {
-            rotation -= 0.3;
+            rotation -= 0.35; // 역동적인 회전 속도
             carousel.style.transform = `rotateY(${rotation}deg)`;
         }, 30);
 
@@ -267,15 +210,13 @@
         const onMove = (e) => {
             if(!isDragging) return;
             const x = e.pageX || e.touches[0].pageX;
-            // 드래그 감도 조절
-            rotation = lastRotation + (x - startX) * 0.2;
+            rotation = lastRotation + (x - startX) * 0.25;
             carousel.style.transform = `rotateY(${rotation}deg)`;
         };
         const onEnd = () => {
             isDragging = false;
-            // 드래그 종료 후 다시 빠른 속도로 회전
             autoDrive = setInterval(() => {
-                rotation -= 0.3;
+                rotation -= 0.35;
                 carousel.style.transform = `rotateY(${rotation}deg)`;
             }, 30);
         };
@@ -286,9 +227,6 @@
         dragArea.addEventListener('touchstart', onStart);
         dragArea.addEventListener('touchmove', onMove);
         window.addEventListener('touchend', onEnd);
-
-        function openModal(k) { document.getElementById('modal').classList.add('active'); }
-        function closeModal() { document.getElementById('modal').classList.remove('active'); }
     </script>
 </body>
 </html>
