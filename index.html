@@ -33,36 +33,37 @@
         img, video { display: block; max-width: 100%; object-fit: cover; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* [★ 미니멀 로딩 아이콘 스타일 ★] */
+        /* [★ 로딩 화면 수정: 반투명 & 0.5초 ★] */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #0a0a0a; /* 완전한 블랙 배경 */
+            /* 투명도 높은 검정 배경 (뒤에 히어로 섹션이 비쳐 보임) */
+            background-color: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(2px); /* 살짝 블러 처리로 로딩 아이콘 강조 */
             z-index: 99999;
             display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease-out, visibility 0.8s;
+            /* 사라질 때 속도 조절 */
+            transition: opacity 0.5s ease-out, visibility 0.5s;
         }
         #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
         /* 심플한 금색 스피너 */
         .minimal-spinner {
             width: 50px; height: 50px;
-            border: 2px solid rgba(181, 164, 139, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-top: 2px solid var(--muted-gold);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
-        /* [Header] */
+        /* [Header] - 처음부터 보이게 수정 */
         header {
             position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
             mix-blend-mode: exclusion;
             pointer-events: none;
-            opacity: 0; transition: opacity 1.5s 0.5s; 
+            opacity: 1; /* 로딩 중에도 보이도록 1로 설정 */
         }
-        body.loaded header { opacity: 1; }
         
         .nav-wrap { display: flex; justify-content: center; }
         .logo { 
@@ -77,53 +78,42 @@
             height: 100vh; width: 100%;
             overflow: hidden;
             background: #000; 
-            display: flex; justify-content: center; align-items: center; /* 중앙 정렬 */
+            display: flex; justify-content: center; align-items: center; 
         }
         
-        /* [★ Rewrite Your Worth 수정 ★] */
+        /* [타이틀] - 처음부터 보이되 은은하게 */
         .hero-title-wrap {
             position: absolute; 
             top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); /* 화면 정중앙 배치 */
+            transform: translate(-50%, -50%); 
             width: 100%; text-align: center; 
-            z-index: 1; /* 카드(z-index: 10)보다 뒤에 위치 */
+            z-index: 1; 
             pointer-events: none;
         }
         .hero-title-wrap h1 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300; font-style: italic;
-            /* 크기 줄임 */
             font-size: clamp(1.5rem, 3vw, 2.5rem); 
             line-height: 1; margin: 0;
             color: #fff;
-            /* 투명도 높임 (은은하게) */
-            opacity: 0; 
+            opacity: 0.15; /* 처음부터 은은하게 보이도록 설정 */
             letter-spacing: 5px;
         }
-        /* 로딩 후 등장 애니메이션 (투명도 0.15까지만) */
-        body.loaded .hero-title-wrap h1 {
-            animation: fadeInWeak 2s forwards 0.5s;
-        }
-        @keyframes fadeInWeak { to { opacity: 0.15; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
 
-
-        /* [★ 카드 슬라이드 수정 ★] */
+        /* [카드 슬라이드] - 처음부터 보이게 수정 */
         .carousel-viewport {
             position: absolute; top: 50%; left: 0; 
-            width: 100%; height: 100%; /* 전체 높이 사용 */
-            /* transform: translateY(-50%);  <- flex로 정렬하므로 제거 */
+            width: 100%; height: 100%; 
             display: flex; justify-content: center; align-items: center;
             perspective: 2000px; 
-            z-index: 10; /* 타이틀보다 앞에 위치 */
+            z-index: 10; 
             cursor: grab;
-            opacity: 0; transition: opacity 1.5s 0.5s;
+            opacity: 1; /* 로딩 중에도 뒤에 보이도록 1로 설정 */
         }
-        body.loaded .carousel-viewport { opacity: 1; } 
         .carousel-viewport:active { cursor: grabbing; }
 
         .carousel-3d {
             position: relative; 
-            /* [크기 확대] 기존 280x400 -> 340x520 */
             width: 340px; height: 520px; 
             transform-style: preserve-3d; transition: transform 0.1s linear;
         }
@@ -140,20 +130,18 @@
             width: 100%; height: 100%; object-fit: cover; 
             filter: brightness(0.8); transition: 0.5s;
         }
-        /* 호버 시 밝아지며 강조 */
         .card:hover img, .card:hover video { filter: brightness(1.0); }
         .card:hover { border-color: rgba(255,255,255,0.6); } 
 
-        /* [모바일 최적화 CSS] */
+        /* [모바일 최적화] */
         @media (max-width: 768px) {
             .carousel-viewport { perspective: 1000px; }
-            /* 모바일에서도 카드 크기 적당히 유지 */
             .carousel-3d { width: 220px; height: 320px; }
             .hero-title-wrap h1 { font-size: 1.2rem; letter-spacing: 2px; }
             .hero-subtitle-wrap { display: none; }
         }
 
-        /* 부제 (최하단 유지) */
+        /* 부제 */
         .hero-subtitle-wrap {
             position: absolute; bottom: 8%; width: 100%; text-align: center; z-index: 20;
             pointer-events: none;
@@ -163,16 +151,14 @@
             font-size: 0.6rem; letter-spacing: 6px;
             color: rgba(255,255,255,0.3);
             text-transform: uppercase;
-            opacity: 0; transition: opacity 1s 1.5s;
+            opacity: 1; /* 처음부터 보이게 설정 */
         }
-        body.loaded .hero-subtitle-wrap p { opacity: 1; }
 
         /* 스크롤 아이콘 */
         .scroll-indicator {
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            z-index: 20; opacity: 0; transition: opacity 1s 2s;
+            z-index: 20; opacity: 0.3; /* 처음부터 보이게 설정 */
         }
-        body.loaded .scroll-indicator { opacity: 0.3; }
 
         .mouse { width: 18px; height: 28px; border: 1px solid #fff; border-radius: 15px; position: relative; }
         .wheel { width: 1px; height: 5px; background: #fff; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-anim 1.5s infinite; }
@@ -420,17 +406,16 @@
         // AOS 초기화 (스크롤 애니메이션)
         AOS.init({ duration: 1200, once: true });
 
-        // [★ 로딩 처리 스크립트 수정 (3초) ★]
+        // [★ 로딩 처리 스크립트 수정 (0.5초) ★]
         window.addEventListener('load', () => {
-            // 3000ms = 3초 동안 로딩 아이콘 보여줌
+            // 500ms = 0.5초 동안 로딩 아이콘 보여줌
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.classList.add('hidden'); // 서서히 사라짐
                 
-                // 스크롤 잠금 해제 및 메인 요소들 등장 처리
+                // 스크롤 잠금 해제
                 document.body.classList.remove('loading-locked');
-                document.body.classList.add('loaded'); // Header, Slider 등장
-            }, 3000); 
+            }, 500); 
         });
 
 
