@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BY SONG SCALP | Artistry</title>
     
-    <!-- 폰트 및 라이브러리 로드 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Montserrat:wght@100;200;300&family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -35,13 +34,17 @@
         img, video { display: block; max-width: 100%; object-fit: cover; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* [★ 로딩 화면 스타일 추가 ★] */
+        /* [★ 로딩 화면 스타일 수정 (반투명 & 3초) ★] */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #050505; z-index: 99999;
+            /* 반투명 블랙 배경 + 블러 효과 */
+            background-color: rgba(5, 5, 5, 0.9); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99999;
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center;
-            transition: opacity 1.2s ease-out, visibility 1.2s;
+            transition: opacity 1.0s ease-out, visibility 1.0s;
         }
         /* 로딩 완료 후 숨김 처리를 위한 클래스 */
         #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -51,25 +54,25 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 1.2rem; letter-spacing: 8px; color: var(--muted-gold);
             text-transform: uppercase; font-weight: 300;
-            opacity: 0; animation: logoBreath 3s infinite ease-in-out;
+            opacity: 0; animation: logoBreath 2.5s infinite ease-in-out;
         }
         .loader-sub {
             font-family: 'Cormorant Garamond', serif;
-            font-style: italic; font-size: 0.9rem; color: #666; margin-top: 10px;
+            font-style: italic; font-size: 0.9rem; color: #888; margin-top: 10px;
             letter-spacing: 2px;
         }
 
         /* 로딩 게이지 바 */
         .progress-bg {
-            width: 200px; height: 2px; background: #222;
+            width: 200px; height: 2px; background: #333;
             border-radius: 2px; overflow: hidden; position: relative;
         }
         .progress-bar {
             position: absolute; left: 0; top: 0;
             height: 100%; width: 0%; 
             background: var(--gold-gradient);
-            /* 5초 동안 차오르는 애니메이션 */
-            animation: fillProgress 5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            /* 2.8초 동안 차오르는 애니메이션 (총 로딩 3초에 맞춤) */
+            animation: fillProgress 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes logoBreath { 0%, 100% { opacity: 0.4; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
@@ -81,7 +84,7 @@
             position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
             mix-blend-mode: exclusion;
             pointer-events: none;
-            opacity: 0; transition: opacity 1s 5.5s; /* 로딩 후 나타나도록 딜레이 */
+            opacity: 0; transition: opacity 1s 3.5s; /* 로딩(3초) 후 나타나도록 딜레이 조정 */
         }
         body.loaded header { opacity: 1; } /* 로딩 끝난 후 보임 */
         
@@ -97,19 +100,10 @@
             position: relative;
             height: 100vh; width: 100%;
             overflow: hidden;
-            background: #000;
+            background: #000; /* 배경 영상 삭제 후 완전한 블랙 배경 */
         }
 
-        /* 배경 영상 */
-        .bg-video {
-            position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%);
-            min-width: 100%; min-height: 100%; 
-            width: auto; height: auto;
-            z-index: -2; 
-            object-fit: cover; 
-            filter: brightness(0.4) grayscale(100%); 
-        }
+        /* 배경 영상 CSS 삭제됨 */
         
         /* 제목 (최상단) */
         .hero-title-wrap {
@@ -124,8 +118,8 @@
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* 로딩 끝난 후 애니메이션 시작 (delay 5.2s) */
-            opacity: 0; animation: fadeDown 1.5s forwards 5.2s;
+            /* 로딩(3초) 후 애니메이션 시작 (delay 3.2s) */
+            opacity: 0; animation: fadeDown 1.5s forwards 3.2s;
         }
 
         /* 부제 (최하단) */
@@ -138,8 +132,8 @@
             font-size: 0.6rem; letter-spacing: 6px;
             color: rgba(255,255,255,0.3);
             text-transform: uppercase;
-            /* 로딩 끝난 후 애니메이션 시작 (delay 5.5s) */
-            opacity: 0; animation: fadeUp 1.5s forwards 5.5s;
+            /* 로딩(3초) 후 애니메이션 시작 (delay 3.5s) */
+            opacity: 0; animation: fadeUp 1.5s forwards 3.5s;
         }
 
         /* [3D Carousel Styling] */
@@ -151,9 +145,9 @@
             perspective: 2500px; 
             z-index: 10; cursor: grab;
             /* 로딩 끝나면 서서히 등장 */
-            opacity: 0; transition: opacity 1.5s 5s;
+            opacity: 0; transition: opacity 1.5s 3s;
         }
-        body.loaded .carousel-viewport { opacity: 1; } /* JS에서 클래스 추가 시 등장 */
+        body.loaded .carousel-viewport { opacity: 1; } 
         
         .carousel-viewport:active { cursor: grabbing; }
 
@@ -189,7 +183,7 @@
         /* 스크롤 아이콘 */
         .scroll-indicator {
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            z-index: 10; opacity: 0; transition: opacity 1s 6s; /* 6초 뒤 등장 */
+            z-index: 10; opacity: 0; transition: opacity 1s 4s; /* 4초 뒤 등장 */
         }
         body.loaded .scroll-indicator { opacity: 0.3; }
 
@@ -272,15 +266,11 @@
     </style>
 </head>
 <body class="loading-locked"> 
-    <!-- 초기 상태에서 스크롤 잠금 (class="loading-locked") -->
-
-    <!-- [1. LOADING INTRO] -->
     <div id="loader">
         <div class="loader-logo-wrap">
             <div class="loader-logo">BY SONG SCALP</div>
-            <div class="loader-sub">The Artistry</div>
+            <div class="loader-sub">Loading Artistry...</div>
         </div>
-        <!-- 5초 게이지 바 -->
         <div class="progress-bg">
             <div class="progress-bar"></div>
         </div>
@@ -292,53 +282,52 @@
         </div>
     </header>
 
-    <!-- [HERO SECTION] -->
     <section class="hero">
-        <!-- 배경 영상 -->
-        <video class="bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1618331835717-801e976710b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80">
-            <source src="https://videos.pexels.com/video-files/3692634/3692634-uhd_2560_1440_25fps.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-
         <div class="hero-title-wrap">
             <h1>Rewrite Your Worth</h1>
         </div>
 
         <div class="carousel-viewport" id="drag-area">
             <div class="carousel-3d" id="carousel">
-                <!-- Card 1 (Video) -->
                 <div class="card">
-                    <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600">
-                        <source src="https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/7901ca29-ba28-43bf-b5fb-f783c63cf481" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 2 (Video) -->
                 <div class="card">
-                     <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=600">
-                        <source src="https://videos.pexels.com/video-files/5091624/5091624-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                     <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/4987a99f-52a0-4987-905f-4dd998489bea" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 3 (Image) -->
                 <div class="card">
-                    <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp1">
-                </div>
-                <!-- Card 4 (Image) -->
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp2">
-                </div>
-                <!-- Card 5 (Image) -->
-               <div class="card">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp3">
-                </div>
-                <!-- Card 6 (Video) -->
-                <div class="card">
-                     <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1562004760-aceed7bb0fe3?w=600">
-                        <source src="https://videos.pexels.com/video-files/4440942/4440942-hd_1920_1080_25fps.mp4" type="video/mp4">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/1efd0c36-e0d3-49b4-94fa-7185009aeb46" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 7 (Image) -->
                 <div class="card">
-                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp4">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/9558a070-d410-4414-9708-ec447491af8e" type="video/mp4">
+                    </video>
+                </div>
+                <div class="card">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/803dbac8-49e6-4aec-9066-2f4929759e67" type="video/mp4">
+                    </video>
+                </div>
+                <div class="card">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/4ccecde9-d2e1-4bd7-a5ea-16b1309aa190" type="video/mp4">
+                    </video>
+                </div>
+                 <div class="card">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/d4beb52a-66db-4d62-bbae-2e2ce8211bb9" type="video/mp4">
+                    </video>
+                </div>
+                 <div class="card">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://github.com/user-attachments/assets/72f4276e-a2fc-40bd-98d8-d922ba5bfa39" type="video/mp4">
+                    </video>
                 </div>
             </div>
         </div>
@@ -352,7 +341,6 @@
         </div>
     </section>
 
-    <!-- [DIRECTOR SECTION] -->
     <section class="director-magazine">
         <div class="director-gradient"></div> 
         <div class="director-container" data-aos="fade-up">
@@ -372,7 +360,6 @@
         </div>
     </section>
 
-    <!-- [PORTFOLIO SECTION] -->
     <section class="portfolio-trigger">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
@@ -412,7 +399,6 @@
         </div>
     </section>
 
-    <!-- [MODAL] -->
     <div id="portfolio-modal" class="modal-overlay">
         <div class="close-btn" onclick="closeModal()">&times;</div>
         <div class="slider-wrapper">
@@ -422,7 +408,6 @@
         </div>
     </div>
 
-    <!-- [FAQ] -->
     <section class="faq">
         <div class="container">
             <div class="section-header" style="margin-bottom:40px;"><h2>Q&A</h2></div>
@@ -444,21 +429,19 @@
         </div>
     </section>
 
-    <!-- [Floating Bar] -->
     <div class="floating-bar">
         <div class="f-btn btn-insta" onclick="alert('인스타그램')"><i class="fab fa-instagram"></i> 포트폴리오</div>
         <div class="f-btn btn-kakao" onclick="alert('카톡상담')"><i class="fas fa-comment"></i> 상담하기</div>
     </div>
 
-    <!-- [SCRIPTS] -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // AOS 초기화 (스크롤 애니메이션)
         AOS.init({ duration: 1200, once: true });
 
-        // [★ 로딩 처리 스크립트 ★]
+        // [★ 로딩 처리 스크립트 수정 (3초) ★]
         window.addEventListener('load', () => {
-            // CSS 애니메이션(5초)이 끝날 즈음에 맞춰 로딩 화면 제거
+            // 3초 후에 로딩 화면 제거
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.classList.add('hidden'); // 서서히 사라짐
@@ -466,22 +449,22 @@
                 // 스크롤 잠금 해제 및 메인 요소들 등장 처리
                 document.body.classList.remove('loading-locked');
                 document.body.classList.add('loaded'); // Header, Slider 등장
-            }, 5000); // 5초 대기
+            }, 3000); // 3000ms = 3초
         });
 
 
         /* [3D Carousel Logic (모바일 반응형)] */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
-        const count = cards.length;
+        const count = cards.length; // 카드가 8개이므로 자동으로 8등분 됨
         const angle = 360 / count;
         let rotation = 0;
         let isDragging = false;
         let startX = 0;
         let lastRotation = 0;
 
-        // 화면 너비에 따라 회전 반경 자동 조절 (PC: 500, 모바일: 240)
-        const getRadius = () => window.innerWidth < 768 ? 240 : 500;
+        // 화면 너비에 따라 회전 반경 자동 조절 (카드가 8개라 반경이 좀 커야 겹치지 않음)
+        const getRadius = () => window.innerWidth < 768 ? 260 : 500;
         let radius = getRadius();
 
         window.addEventListener('resize', () => {
@@ -537,19 +520,19 @@
         window.addEventListener('touchend', onEnd);
 
 
-        /* Modal Logic */
+        /* Modal Logic (기존 데이터 유지) */
         const portfolioData = {
             'hairline': [
-                { title: 'M자 헤어라인 교정', desc: '자연스러운 그라데이션 기법 적용', img: 'https://via.placeholder.com/800x600/111/fff?text=Hairline+1' },
-                { title: '측두부 라인 디자인', desc: '구레나룻과 이어지는 입체적 라인', img: 'https://via.placeholder.com/800x600/222/fff?text=Hairline+2' }
+                { title: 'M자 헤어라인 교정', desc: '자연스러운 그라데이션 기법 적용', img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
+                { title: '측두부 라인 디자인', desc: '구레나룻과 이어지는 입체적 라인', img: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
             ],
             'density': [
-                { title: '정수리 밀도보강', desc: '비어 보이는 두피를 완벽하게 커버', img: 'https://via.placeholder.com/800x600/111/d4af37?text=Density+1' },
-                { title: '가르마 숱채움', desc: '여성 가르마 라인 집중 커버', img: 'https://via.placeholder.com/800x600/222/d4af37?text=Density+2' }
+                { title: '정수리 밀도보강', desc: '비어 보이는 두피를 완벽하게 커버', img: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
+                { title: '가르마 숱채움', desc: '여성 가르마 라인 집중 커버', img: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
             ],
             'scar': [
-                { title: '두피 흉터 커버', desc: '이식 및 절개 흉터 90% 이상 커버', img: 'https://via.placeholder.com/800x600/111/999?text=Scar+1' },
-                { title: '삭발 디자인', desc: '전체 삭발 스타일링', img: 'https://via.placeholder.com/800x600/222/999?text=Scar+2' }
+                { title: '두피 흉터 커버', desc: '이식 및 절개 흉터 90% 이상 커버', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
+                { title: '삭발 디자인', desc: '전체 삭발 스타일링', img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
             ]
         };
 
