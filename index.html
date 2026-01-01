@@ -26,7 +26,6 @@
             overflow-x: hidden; word-break: keep-all; line-height: 1.6;
         }
         
-        /* 로딩 중 스크롤 방지용 클래스 */
         body.loading-locked { overflow: hidden; height: 100vh; }
         body.modal-open { overflow: hidden; }
 
@@ -34,49 +33,26 @@
         img, video { display: block; max-width: 100%; object-fit: cover; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* [★ 로딩 화면 스타일 수정 (반투명 & 3초) ★] */
+        /* [★ 미니멀 로딩 아이콘 스타일 ★] */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* 반투명 블랙 배경 + 블러 효과 */
-            background-color: rgba(5, 5, 5, 0.9); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background-color: #0a0a0a; /* 완전한 블랙 배경 */
             z-index: 99999;
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center;
-            transition: opacity 1.0s ease-out, visibility 1.0s;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
         }
-        /* 로딩 완료 후 숨김 처리를 위한 클래스 */
         #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        .loader-logo-wrap { text-align: center; margin-bottom: 30px; }
-        .loader-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2rem; letter-spacing: 8px; color: var(--muted-gold);
-            text-transform: uppercase; font-weight: 300;
-            opacity: 0; animation: logoBreath 2.5s infinite ease-in-out;
-        }
-        .loader-sub {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic; font-size: 0.9rem; color: #888; margin-top: 10px;
-            letter-spacing: 2px;
+        /* 심플한 금색 스피너 */
+        .minimal-spinner {
+            width: 50px; height: 50px;
+            border: 2px solid rgba(181, 164, 139, 0.2);
+            border-top: 2px solid var(--muted-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        /* 로딩 게이지 바 */
-        .progress-bg {
-            width: 200px; height: 2px; background: #333;
-            border-radius: 2px; overflow: hidden; position: relative;
-        }
-        .progress-bar {
-            position: absolute; left: 0; top: 0;
-            height: 100%; width: 0%; 
-            background: var(--gold-gradient);
-            /* 2.8초 동안 차오르는 애니메이션 (총 로딩 3초에 맞춤) */
-            animation: fillProgress 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes logoBreath { 0%, 100% { opacity: 0.4; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } }
-        @keyframes fillProgress { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 
         /* [Header] */
@@ -84,9 +60,9 @@
             position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
             mix-blend-mode: exclusion;
             pointer-events: none;
-            opacity: 0; transition: opacity 1s 3.5s; /* 로딩(3초) 후 나타나도록 딜레이 조정 */
+            opacity: 0; transition: opacity 1.5s 0.5s; 
         }
-        body.loaded header { opacity: 1; } /* 로딩 끝난 후 보임 */
+        body.loaded header { opacity: 1; }
         
         .nav-wrap { display: flex; justify-content: center; }
         .logo { 
@@ -100,31 +76,86 @@
             position: relative;
             height: 100vh; width: 100%;
             overflow: hidden;
-            background: #000; /* 배경 영상 삭제 후 완전한 블랙 배경 */
+            background: #000; 
+            display: flex; justify-content: center; align-items: center; /* 중앙 정렬 */
         }
-
-        /* 배경 영상 CSS 삭제됨 */
         
-        /* 제목 (최상단) */
+        /* [★ Rewrite Your Worth 수정 ★] */
         .hero-title-wrap {
-            position: absolute; top: 10%; width: 100%; text-align: center; z-index: 1; 
-            pointer-events: none; transition: top 0.3s;
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); /* 화면 정중앙 배치 */
+            width: 100%; text-align: center; 
+            z-index: 1; /* 카드(z-index: 10)보다 뒤에 위치 */
+            pointer-events: none;
         }
         .hero-title-wrap h1 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300; font-style: italic;
-            font-size: clamp(2rem, 4vw, 3rem); 
+            /* 크기 줄임 */
+            font-size: clamp(1.5rem, 3vw, 2.5rem); 
             line-height: 1; margin: 0;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* 로딩(3초) 후 애니메이션 시작 (delay 3.2s) */
-            opacity: 0; animation: fadeDown 1.5s forwards 3.2s;
+            color: #fff;
+            /* 투명도 높임 (은은하게) */
+            opacity: 0; 
+            letter-spacing: 5px;
+        }
+        /* 로딩 후 등장 애니메이션 (투명도 0.15까지만) */
+        body.loaded .hero-title-wrap h1 {
+            animation: fadeInWeak 2s forwards 0.5s;
+        }
+        @keyframes fadeInWeak { to { opacity: 0.15; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
+
+
+        /* [★ 카드 슬라이드 수정 ★] */
+        .carousel-viewport {
+            position: absolute; top: 50%; left: 0; 
+            width: 100%; height: 100%; /* 전체 높이 사용 */
+            /* transform: translateY(-50%);  <- flex로 정렬하므로 제거 */
+            display: flex; justify-content: center; align-items: center;
+            perspective: 2000px; 
+            z-index: 10; /* 타이틀보다 앞에 위치 */
+            cursor: grab;
+            opacity: 0; transition: opacity 1.5s 0.5s;
+        }
+        body.loaded .carousel-viewport { opacity: 1; } 
+        .carousel-viewport:active { cursor: grabbing; }
+
+        .carousel-3d {
+            position: relative; 
+            /* [크기 확대] 기존 280x400 -> 340x520 */
+            width: 340px; height: 520px; 
+            transform-style: preserve-3d; transition: transform 0.1s linear;
         }
 
-        /* 부제 (최하단) */
+        .card {
+            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
+            border-radius: 6px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            background: #000;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        }
+        .card img, .card video { 
+            width: 100%; height: 100%; object-fit: cover; 
+            filter: brightness(0.8); transition: 0.5s;
+        }
+        /* 호버 시 밝아지며 강조 */
+        .card:hover img, .card:hover video { filter: brightness(1.0); }
+        .card:hover { border-color: rgba(255,255,255,0.6); } 
+
+        /* [모바일 최적화 CSS] */
+        @media (max-width: 768px) {
+            .carousel-viewport { perspective: 1000px; }
+            /* 모바일에서도 카드 크기 적당히 유지 */
+            .carousel-3d { width: 220px; height: 320px; }
+            .hero-title-wrap h1 { font-size: 1.2rem; letter-spacing: 2px; }
+            .hero-subtitle-wrap { display: none; }
+        }
+
+        /* 부제 (최하단 유지) */
         .hero-subtitle-wrap {
-            position: absolute; bottom: 8%; width: 100%; text-align: center; z-index: 1;
+            position: absolute; bottom: 8%; width: 100%; text-align: center; z-index: 20;
             pointer-events: none;
         }
         .hero-subtitle-wrap p {
@@ -132,66 +163,20 @@
             font-size: 0.6rem; letter-spacing: 6px;
             color: rgba(255,255,255,0.3);
             text-transform: uppercase;
-            /* 로딩(3초) 후 애니메이션 시작 (delay 3.5s) */
-            opacity: 0; animation: fadeUp 1.5s forwards 3.5s;
+            opacity: 0; transition: opacity 1s 1.5s;
         }
-
-        /* [3D Carousel Styling] */
-        .carousel-viewport {
-            position: absolute; top: 50%; left: 0; 
-            width: 100%; height: 600px;
-            transform: translateY(-50%);
-            display: flex; justify-content: center; align-items: center;
-            perspective: 2500px; 
-            z-index: 10; cursor: grab;
-            /* 로딩 끝나면 서서히 등장 */
-            opacity: 0; transition: opacity 1.5s 3s;
-        }
-        body.loaded .carousel-viewport { opacity: 1; } 
-        
-        .carousel-viewport:active { cursor: grabbing; }
-
-        .carousel-3d {
-            position: relative; width: 280px; height: 400px; 
-            transform-style: preserve-3d; transition: transform 0.1s linear;
-        }
-
-        .card {
-            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
-            border-radius: 4px; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.15); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
-            background: #000;
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
-        }
-        .card img, .card video { 
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: brightness(0.9); transition: 0.5s;
-        }
-        .card:hover img, .card:hover video { filter: brightness(1.1); transform: scale(1.05); }
-        .card:hover { border-color: rgba(255,255,255,0.8); z-index: 100; } 
-
-        /* [모바일 최적화 CSS] */
-        @media (max-width: 768px) {
-            .carousel-viewport { height: 400px; perspective: 1000px; }
-            .carousel-3d { width: 160px; height: 240px; }
-            .hero-title-wrap { top: 15%; }
-            .hero-subtitle-wrap { display: none; }
-        }
-        @media (max-height: 600px) { .hero-title-wrap { display: none; } }
+        body.loaded .hero-subtitle-wrap p { opacity: 1; }
 
         /* 스크롤 아이콘 */
         .scroll-indicator {
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            z-index: 10; opacity: 0; transition: opacity 1s 4s; /* 4초 뒤 등장 */
+            z-index: 20; opacity: 0; transition: opacity 1s 2s;
         }
         body.loaded .scroll-indicator { opacity: 0.3; }
 
         .mouse { width: 18px; height: 28px; border: 1px solid #fff; border-radius: 15px; position: relative; }
         .wheel { width: 1px; height: 5px; background: #fff; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-anim 1.5s infinite; }
 
-        @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(-20px); } }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
         @keyframes scroll-anim { 0% { top: 6px; opacity: 1; } 100% { top: 16px; opacity: 0; } }
 
         /* [Director Section] */
@@ -266,14 +251,9 @@
     </style>
 </head>
 <body class="loading-locked"> 
+
     <div id="loader">
-        <div class="loader-logo-wrap">
-            <div class="loader-logo">BY SONG SCALP</div>
-            <div class="loader-sub">Loading Artistry...</div>
-        </div>
-        <div class="progress-bg">
-            <div class="progress-bar"></div>
-        </div>
+        <div class="minimal-spinner"></div>
     </div>
 
     <header>
@@ -283,6 +263,7 @@
     </header>
 
     <section class="hero">
+        
         <div class="hero-title-wrap">
             <h1>Rewrite Your Worth</h1>
         </div>
@@ -441,7 +422,7 @@
 
         // [★ 로딩 처리 스크립트 수정 (3초) ★]
         window.addEventListener('load', () => {
-            // 3초 후에 로딩 화면 제거
+            // 3000ms = 3초 동안 로딩 아이콘 보여줌
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.classList.add('hidden'); // 서서히 사라짐
@@ -449,22 +430,22 @@
                 // 스크롤 잠금 해제 및 메인 요소들 등장 처리
                 document.body.classList.remove('loading-locked');
                 document.body.classList.add('loaded'); // Header, Slider 등장
-            }, 1500); // 3000ms = 3초
+            }, 3000); 
         });
 
 
         /* [3D Carousel Logic (모바일 반응형)] */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
-        const count = cards.length; // 카드가 8개이므로 자동으로 8등분 됨
+        const count = cards.length; 
         const angle = 360 / count;
         let rotation = 0;
         let isDragging = false;
         let startX = 0;
         let lastRotation = 0;
 
-        // 화면 너비에 따라 회전 반경 자동 조절 (카드가 8개라 반경이 좀 커야 겹치지 않음)
-        const getRadius = () => window.innerWidth < 768 ? 260 : 500;
+        // 카드가 커졌으므로 회전 반경(Radius)을 조금 더 늘려줌 (겹침 방지)
+        const getRadius = () => window.innerWidth < 768 ? 300 : 600;
         let radius = getRadius();
 
         window.addEventListener('resize', () => {
