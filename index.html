@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BY SONG SCALP | Artistry</title>
     
-    <!-- 폰트 로드 -->
+    <!-- 폰트 및 라이브러리 로드 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Montserrat:wght@100;200;300&family=Noto+Sans+KR:wght@100;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -35,7 +35,7 @@
         header {
             position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
             mix-blend-mode: exclusion;
-            pointer-events: none; /* 헤더 영역이 클릭을 방해하지 않도록 */
+            pointer-events: none;
         }
         .nav-wrap { display: flex; justify-content: center; }
         .logo { 
@@ -44,9 +44,7 @@
             color: rgba(255,255,255,0.8); text-transform: uppercase;
         }
 
-        /* =========================================
-           [1. Hero Section]
-           ========================================= */
+        /* [Hero Section] */
         .hero {
             position: relative;
             height: 100vh; width: 100%;
@@ -54,7 +52,7 @@
             background: #000;
         }
 
-        /* 배경 (어둡게 처리하여 슬라이드 집중) */
+        /* 배경 영상 (밝기 약간 수정: 0.25 -> 0.4) */
         .bg-video {
             position: absolute; top: 50%; left: 50%; 
             transform: translate(-50%, -50%);
@@ -62,23 +60,21 @@
             width: auto; height: auto;
             z-index: -2; 
             object-fit: cover; 
-            filter: brightness(0.25) grayscale(100%); 
+            filter: brightness(0.4) grayscale(100%); 
         }
         
-        /* 
-           [수정] 제목 배치: 사진과 겹치지 않게 최상단으로 이동 
-           z-index: 1로 설정하여 사진(z-index: 5)보다 뒤에 위치하게 함 (겹쳐도 사진이 위)
-        */
+        /* 제목 (최상단) */
         .hero-title-wrap {
             position: absolute; 
-            top: 10%; /* 화면 상단 10% 지점 */
+            top: 10%; 
             width: 100%; text-align: center; z-index: 1; 
             pointer-events: none;
+            transition: top 0.3s;
         }
         .hero-title-wrap h1 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300; font-style: italic;
-            font-size: clamp(2rem, 4vw, 3rem); /* 크기 적당히 유지 */
+            font-size: clamp(2rem, 4vw, 3rem); 
             line-height: 1; margin: 0;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
@@ -86,32 +82,30 @@
             opacity: 0; animation: fadeDown 1.5s forwards 0.5s;
         }
 
-        /* 
-           [수정] 부제 배치: 최하단으로 이동
-        */
+        /* 부제 (최하단) */
         .hero-subtitle-wrap {
             position: absolute; 
-            bottom: 8%; /* 화면 하단 8% 지점 */
+            bottom: 8%; 
             width: 100%; text-align: center; z-index: 1;
             pointer-events: none;
         }
         .hero-subtitle-wrap p {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.6rem; letter-spacing: 6px;
-            color: rgba(255,255,255,0.3); /* 눈에 덜 띄게 처리 */
+            color: rgba(255,255,255,0.3);
             text-transform: uppercase;
             opacity: 0; animation: fadeUp 1.5s forwards 1s;
         }
 
-        /* 중앙 회전 슬라이드 */
+        /* [3D Carousel Styling] */
         .carousel-viewport {
             position: absolute; 
             top: 50%; left: 0; 
             width: 100%; height: 600px;
             transform: translateY(-50%);
             display: flex; justify-content: center; align-items: center;
-            perspective: 2500px; 
-            z-index: 10; /* 텍스트보다 훨씬 높은 레이어 */
+            perspective: 2500px; /* PC용 원근감 */
+            z-index: 10;
             cursor: grab;
         }
         .carousel-viewport:active { cursor: grabbing; }
@@ -129,26 +123,38 @@
             border: 1px solid rgba(255,255,255,0.15); 
             box-shadow: 0 25px 50px rgba(0,0,0,0.9);
             background: #000;
+            -webkit-backface-visibility: hidden; /* 모바일 깜빡임 방지 */
+            backface-visibility: hidden;
         }
-        /* 사진/비디오 공통 스타일 */
         .card img, .card video { 
             width: 100%; height: 100%; object-fit: cover; 
-            filter: brightness(0.9); /* 비포애프터 잘 보이게 밝기 유지 */
+            filter: brightness(0.9); 
             transition: 0.5s;
         }
         .card:hover img, .card:hover video { filter: brightness(1.1); transform: scale(1.05); }
         .card:hover { border-color: rgba(255,255,255,0.8); z-index: 100; } 
 
-
-        /* 
-           [반응형 안전장치] 
-           화면 높이가 800px 이하(노트북 등)일 때 텍스트를 아예 숨겨서 사진을 보호
-        */
-        @media (max-height: 800px) {
-            .hero-title-wrap { opacity: 0.3; top: 15%; transform: scale(0.8); } 
-            .hero-subtitle-wrap { display: none; }
+        /* [★ 모바일 최적화 CSS 추가 ★] */
+        @media (max-width: 768px) {
+            /* 1. 컨테이너 높이 및 원근감 조정 */
+            .carousel-viewport {
+                height: 400px;
+                perspective: 1000px; 
+            }
+            /* 2. 카드 크기 축소 (화면 밖으로 나가지 않게) */
+            .carousel-3d {
+                width: 160px;
+                height: 240px;
+            }
+            /* 3. 제목 위치 조정 */
+            .hero-title-wrap {
+                top: 15%;
+            }
+            /* 4. 부제 숨김 (공간 확보) */
+            .hero-subtitle-wrap {
+                display: none;
+            }
         }
-        /* 화면 높이가 아주 작으면 제목도 숨김 */
         @media (max-height: 600px) {
             .hero-title-wrap { display: none; }
         }
@@ -170,7 +176,7 @@
         @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(20px); } }
         @keyframes scroll-anim { 0% { top: 6px; opacity: 1; } 100% { top: 16px; opacity: 0; } }
 
-        /* [Sections 2~4 생략없이 포함] */
+        /* [Director Section] */
         .director-magazine {
             position: relative; padding: 180px 0;
             background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
@@ -191,6 +197,7 @@
         .history-list li { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 8px; font-weight: 300; }
         .history-list li::before { content: '•'; margin-right: 10px; color: var(--muted-gold); }
 
+        /* [Portfolio Section] */
         .portfolio-trigger { padding: 120px 0; background: #0a0a0a; }
         .section-header { text-align: center; margin-bottom: 80px; }
         .section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--muted-gold); margin-bottom: 10px; font-style: italic; }
@@ -210,6 +217,7 @@
         .card-desc { font-size: 0.85rem; color: #ccc; font-weight: 300; margin-bottom: 25px; }
         .click-indicator { padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.75rem; color: #fff; font-weight: 300; }
 
+        /* [Modal] */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .close-btn { position: absolute; top: 30px; right: 30px; font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 20; transition: 0.3s; }
@@ -225,6 +233,7 @@
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: transparent; color: #555; border: none; cursor: pointer; font-size: 3rem; padding: 20px; }
         .nav-btn:hover { color: #fff; } .prev-btn { left: 20px; } .next-btn { right: 20px; }
 
+        /* [FAQ] */
         .faq { padding: 100px 0; background: #050505; border-top: 1px solid #111; }
         .faq-item { border-bottom: 1px solid #222; padding: 25px 0; cursor: pointer; }
         .faq-q { display: flex; justify-content: space-between; font-size: 1rem; color: #ccc; font-weight: 300; }
@@ -232,6 +241,7 @@
         .faq-a { max-height: 0; overflow: hidden; color: #777; transition: 0.3s; margin-top: 5px; font-size: 0.9rem; }
         .faq-item.active .faq-a { max-height: 200px; padding-top: 15px; }
 
+        /* [Floating Bar] */
         .floating-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 999; }
         .f-btn { padding: 12px 30px; border-radius: 50px; font-weight: 500; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 8px; font-size: 0.85rem; backdrop-filter: blur(10px); transition: 0.3s; }
         .f-btn:hover { transform: translateY(-3px); }
@@ -249,81 +259,64 @@
 
     <!-- [HERO SECTION] -->
     <section class="hero">
-        <video class="bg-video" autoplay muted loop playsinline>
+        <!-- 배경 영상 (Pexels 무료영상 대체) -->
+        <video class="bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1618331835717-801e976710b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80">
             <source src="https://videos.pexels.com/video-files/3692634/3692634-uhd_2560_1440_25fps.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
 
-        <!-- 1. 제목 (최상단) -->
         <div class="hero-title-wrap">
             <h1>Rewrite Your Worth</h1>
         </div>
 
-        <!-- 2. 중앙 슬라이드 (사진 & 영상 혼합) -->
         <div class="carousel-viewport" id="drag-area">
+            <!-- 
+                [교체됨] 기존 Github 링크는 로딩 속도가 느리고 깨지므로 
+                Pexels(무료영상) 및 Unsplash(이미지)로 교체하여 안정성을 확보했습니다.
+                poster="" 속성은 모바일 저전력 모드에서 영상 대신 썸네일을 보여줍니다.
+            -->
             <div class="carousel-3d" id="carousel">
-                <!-- 
-                    [TIP] 영상은 3개 정도만 사용하세요 (성능 최적화)
-                    나머지는 이미지로 구성하는 것이 좋습니다.
-                -->
-                <!-- Card 1: 비디오 예시 (muted, autoplay 필수) -->
+                <!-- Card 1 (Video) -->
                 <div class="card">
-                    <video autoplay muted loop playsinline>
-                        <!-- 여기에 준비하신 1~2MB 크기의 최적화된 영상 링크를 넣으세요 -->
-                        <source src="https://github.com/user-attachments/assets/7901ca29-ba28-43bf-b5fb-f783c63cf481" type="video/mp4">
+                    <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600">
+                        <source src="https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 2: 비디오 예시 -->
+                <!-- Card 2 (Video) -->
                 <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/4987a99f-52a0-4987-905f-4dd998489bea" type="video/mp4">
+                     <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=600">
+                        <source src="https://videos.pexels.com/video-files/5091624/5091624-uhd_2560_1440_25fps.mp4" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 3: 이미지 -->
+                <!-- Card 3 (Image) -->
                 <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/1efd0c36-e0d3-49b4-94fa-7185009aeb46" type="video/mp4">
-                    </video>
+                    <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp1">
                 </div>
-                <!-- Card 4: 이미지 -->
+                <!-- Card 4 (Image) -->
                 <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/9558a070-d410-4414-9708-ec447491af8e" type="video/mp4">
-                    </video>
+                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp2">
                 </div>
-                <!-- Card 5: 이미지 -->
+                <!-- Card 5 (Image) -->
                <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/803dbac8-49e6-4aec-9066-2f4929759e67" type="video/mp4">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp3">
+                </div>
+                <!-- Card 6 (Video) -->
+                <div class="card">
+                     <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1562004760-aceed7bb0fe3?w=600">
+                        <source src="https://videos.pexels.com/video-files/4440942/4440942-hd_1920_1080_25fps.mp4" type="video/mp4">
                     </video>
                 </div>
-                <!-- Card 6: 비디오 예시 -->
+                <!-- Card 7 (Image) -->
                 <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/4ccecde9-d2e1-4bd7-a5ea-16b1309aa190" type="video/mp4">
-                    </video>
-                </div>
-                <!-- Card 7: 이미지 -->
-                <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/d4beb52a-66db-4d62-bbae-2e2ce8211bb9" type="video/mp4">
-                    </video>
-                </div>
-                <!-- Card 8: 이미지 -->
-                <div class="card">
-                     <video autoplay muted loop playsinline>
-                        <source src="https://github.com/user-attachments/assets/72f4276e-a2fc-40bd-98d8-d922ba5bfa39" type="video/mp4">
-                    </video>
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="scalp4">
                 </div>
             </div>
         </div>
 
-        <!-- 3. 부제 (최하단) -->
         <div class="hero-subtitle-wrap">
             <p>The Premium Scalp Artistry</p>
         </div>
 
-        <!-- 4. 스크롤 아이콘 -->
         <div class="scroll-indicator">
             <div class="mouse"><div class="wheel"></div></div>
         </div>
@@ -432,7 +425,7 @@
     <script>
         AOS.init({ duration: 1200, once: true });
 
-        /* 3D Carousel Logic */
+        /* [★수정됨★] 3D Carousel Logic (모바일 반응형 적용) */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
         const count = cards.length;
@@ -442,13 +435,23 @@
         let startX = 0;
         let lastRotation = 0;
 
-        // 반지름 500px
-        const radius = 500; 
+        // 화면 너비에 따라 회전 반경 자동 조절 (PC: 500, 모바일: 240)
+        const getRadius = () => window.innerWidth < 768 ? 240 : 500;
+        let radius = getRadius();
 
-        // 초기 배치
-        cards.forEach((card, i) => {
-            card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
+        // 화면 크기 변경 시 재계산
+        window.addEventListener('resize', () => {
+            radius = getRadius();
+            updateCardPositions();
         });
+
+        // 카드 위치 잡기
+        function updateCardPositions() {
+            cards.forEach((card, i) => {
+                card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
+            });
+        }
+        updateCardPositions();
 
         // 자동 회전
         let autoDrive = setInterval(() => {
@@ -457,18 +460,23 @@
         }, 30);
 
         const dragArea = document.getElementById('drag-area');
+
         const onStart = (e) => {
             isDragging = true;
             startX = e.pageX || e.touches[0].pageX;
             lastRotation = rotation;
             clearInterval(autoDrive);
         };
+
         const onMove = (e) => {
             if(!isDragging) return;
             const x = e.pageX || e.touches[0].pageX;
-            rotation = lastRotation + (x - startX) * 0.2;
+            // 모바일 터치 감도 조절
+            const speed = window.innerWidth < 768 ? 0.5 : 0.2;
+            rotation = lastRotation + (x - startX) * speed;
             carousel.style.transform = `rotateY(${rotation}deg)`;
         };
+
         const onEnd = () => {
             isDragging = false;
             autoDrive = setInterval(() => {
@@ -477,11 +485,17 @@
             }, 30);
         };
 
+        // 마우스 이벤트
         dragArea.addEventListener('mousedown', onStart);
         window.addEventListener('mousemove', onMove);
         window.addEventListener('mouseup', onEnd);
-        dragArea.addEventListener('touchstart', onStart);
-        dragArea.addEventListener('touchmove', onMove);
+
+        // 터치 이벤트 (모바일 필수) - 스크롤 간섭 방지 처리
+        dragArea.addEventListener('touchstart', onStart, {passive: false});
+        dragArea.addEventListener('touchmove', (e) => {
+            if(isDragging) e.preventDefault(); 
+            onMove(e);
+        }, {passive: false});
         window.addEventListener('touchend', onEnd);
 
 
