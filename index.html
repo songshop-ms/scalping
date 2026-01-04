@@ -40,10 +40,9 @@
         body {
             background-color: #0a0a0a;
             color: #ffffff;
-            overflow-x: hidden; /* 가로 스크롤 방지 */
+            overflow-x: hidden;
         }
         
-        /* 스크롤바 커스텀 */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
@@ -65,13 +64,11 @@
 
         /* 유틸리티 */
         .break-keep { word-break: keep-all; }
-        .touch-pan-y { touch-action: pan-y; } /* 세로 스크롤 허용 */
+        .touch-pan-y { touch-action: pan-y; }
         
-        /* 로딩 락 */
         body.loading-locked { overflow: hidden; height: 100vh; }
         body.modal-open { overflow: hidden; }
 
-        /* 모달 애니메이션 */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
     </style>
@@ -99,7 +96,7 @@
         </div>
 
         <div id="drag-area" class="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10 cursor-grab active:cursor-grabbing touch-pan-y md:perspective-2000 perspective-1000">
-            <div id="carousel" class="relative md:w-[340px] md:h-[520px] w-[160px] h-[260px] preserve-3d transition-transform duration-75 linear">
+            <div id="carousel" class="relative md:w-[320px] md:h-[500px] w-[140px] h-[240px] preserve-3d transition-transform duration-75 linear">
             </div>
         </div>
 
@@ -116,7 +113,7 @@
         </div>
     </section>
 
-    <section class="relative w-full min-h-screen flex items-end md:items-center bg-cover bg-center bg-no-repeat bg-fixed"
+    <section class="relative w-full min-h-screen flex items-end md:items-center bg-cover bg-[center_top] bg-scroll md:bg-fixed"
              style="background-image: url('https://github.com/user-attachments/assets/a9631cff-5ad2-40b7-8dcd-cf75769a60e8')">
         
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent md:hidden z-[1]"></div>
@@ -160,7 +157,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-[#222] border border-[#222] max-w-[1200px] mx-auto" data-aos="fade-up" data-aos-delay="200">
                 <div class="relative h-[450px] overflow-hidden cursor-pointer bg-black group" onclick="openModal('hairline')">
-                    <img src="https://github.com/user-attachments/assets/220c59e1-e8a6-4134-94c1-adef9c8fdb2d" alt="Hairline" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="https://github.com/user-attachments/assets/220c59e1-e8a6-4134-94c1-adef9c8fdb2d" loading="lazy" decoding="async" alt="Hairline" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black/40 transition-colors duration-300 group-hover:bg-black/60"></div>
                     <div class="absolute inset-0 flex flex-col justify-center items-center z-[2] pointer-events-none">
                         <span class="text-[1.4rem] font-normal mb-2.5 tracking-[2px] text-white drop-shadow-md">HAIRLINE</span>
@@ -170,7 +167,7 @@
                     </div>
                 </div>
                 <div class="relative h-[450px] overflow-hidden cursor-pointer bg-black group" onclick="openModal('density')">
-                    <img src="https://github.com/user-attachments/assets/81cdffa6-78b0-46b9-a7ce-3ed80e2844c4" alt="Density" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="https://github.com/user-attachments/assets/81cdffa6-78b0-46b9-a7ce-3ed80e2844c4" loading="lazy" decoding="async" alt="Density" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black/40 transition-colors duration-300 group-hover:bg-black/60"></div>
                     <div class="absolute inset-0 flex flex-col justify-center items-center z-[2] pointer-events-none">
                         <span class="text-[1.4rem] font-normal mb-2.5 tracking-[2px] text-white drop-shadow-md">DENSITY</span>
@@ -180,7 +177,7 @@
                     </div>
                 </div>
                 <div class="relative h-[450px] overflow-hidden cursor-pointer bg-black group" onclick="openModal('scar')">
-                    <img src="https://github.com/user-attachments/assets/aac5ce73-1f8c-45a9-8cb5-db5474cb9247" alt="Scar" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="https://github.com/user-attachments/assets/aac5ce73-1f8c-45a9-8cb5-db5474cb9247" loading="lazy" decoding="async" alt="Scar" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-black/40 transition-colors duration-300 group-hover:bg-black/60"></div>
                     <div class="absolute inset-0 flex flex-col justify-center items-center z-[2] pointer-events-none">
                         <span class="text-[1.4rem] font-normal mb-2.5 tracking-[2px] text-white drop-shadow-md">SCAR COVER</span>
@@ -210,13 +207,13 @@
                         <div class="absolute top-4 left-0 w-full text-center z-10 pointer-events-none">
                             <span class="bg-black/60 backdrop-blur-[2px] px-4 py-1.5 text-[0.7rem] md:text-[0.8rem] text-[#aaa] tracking-[2px] border border-white/10 rounded-full font-montserrat uppercase font-light">wrong case</span>
                         </div>
-                        <img src="https://github.com/user-attachments/assets/12547a90-aba3-4f8f-bff5-16030afff068" alt="Wrong Case" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105">
+                        <img src="https://github.com/user-attachments/assets/12547a90-aba3-4f8f-bff5-16030afff068" loading="lazy" alt="Wrong Case" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105">
                     </div>
                     <div class="w-1/2 relative bg-black overflow-hidden group border-l border-[#222]">
                         <div class="absolute top-4 left-0 w-full text-center z-10 pointer-events-none">
                             <span class="bg-muted-gold/70 backdrop-blur-[3px] px-4 py-1.5 text-[0.7rem] md:text-[0.8rem] text-black font-normal tracking-[2px] rounded-full shadow-lg shadow-muted-gold/10 font-montserrat uppercase border border-muted-gold/30">by song scalp</span>
                         </div>
-                        <img src="https://github.com/user-attachments/assets/3f96d33a-7c50-4ca7-a9b9-8abbb4266362" alt="By Song SMP" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <img src="https://github.com/user-attachments/assets/3f96d33a-7c50-4ca7-a9b9-8abbb4266362" loading="lazy" alt="By Song SMP" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-muted-gold/10 to-transparent pointer-events-none"></div>
                     </div>
                     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
@@ -243,7 +240,6 @@
                         <span class="text-[0.7rem] text-muted-gold/70 font-medium uppercase tracking-widest mb-2">테크닉</span>
                         <p class="text-white/90 font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep relative z-10">5년 경력의 노하우로 두피 부위와 컨디션에 맞춰 압(Press) 조절</p>
                     </div>
-
                     <div class="bg-[#111] border-r border-[#222] p-5 md:px-10 md:py-8 flex flex-col justify-center">
                         <span class="text-[0.7rem] text-[#555] font-medium uppercase tracking-widest mb-2">색소 주입</span>
                         <p class="text-[#777] font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep">필요 이상으로 진하고 깊게 주입하여 시간이 지나면 푸르게 변색됨</p>
@@ -252,7 +248,6 @@
                         <span class="text-[0.7rem] text-muted-gold/70 font-medium uppercase tracking-widest mb-2">색소 주입</span>
                         <p class="text-white/90 font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep relative z-10">자체 개발 기법으로 딱 필요한 만큼의 최소한의 색소만 주입 (변색 방지)</p>
                     </div>
-
                     <div class="bg-[#111] border-r border-[#222] p-5 md:px-10 md:py-8 flex flex-col justify-center">
                         <span class="text-[0.7rem] text-[#555] font-medium uppercase tracking-widest mb-2">통증</span>
                         <p class="text-[#777] font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep">깊은 시술 깊이로 인해 마취를 해도 통증이 느껴짐</p>
@@ -261,7 +256,6 @@
                         <span class="text-[0.7rem] text-muted-gold/70 font-medium uppercase tracking-widest mb-2">통증</span>
                         <p class="text-white/90 font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep relative z-10">마취 없이도 편안하게 받을 수 있는 무통증 시술</p>
                     </div>
-
                     <div class="bg-[#111] border-r border-[#222] p-5 md:px-10 md:py-8 flex flex-col justify-center">
                         <span class="text-[0.7rem] text-[#555] font-medium uppercase tracking-widest mb-2">디자인</span>
                         <p class="text-[#777] font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep">헤어 라인을 꽉 채우거나 과하게 디자인하여 인위적임</p>
@@ -270,7 +264,6 @@
                         <span class="text-[0.7rem] text-muted-gold/70 font-medium uppercase tracking-widest mb-2">디자인</span>
                         <p class="text-white/90 font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep relative z-10">머리털이 나는 범위 내에서 <strong class="text-white font-medium">'음영의 역할'</strong>을 하는 본질에 집중</p>
                     </div>
-
                     <div class="bg-[#111] border-r border-[#222] p-5 md:px-10 md:py-8 flex flex-col justify-center">
                         <span class="text-[0.7rem] text-[#555] font-medium uppercase tracking-widest mb-2">결과물</span>
                         <p class="text-[#777] font-light text-[0.75rem] md:text-[0.9rem] leading-relaxed break-keep">밝은 곳에서 보면 점이 퍼져 보이고 문신한 티가 많이 남</p>
@@ -289,8 +282,13 @@
         
         <div class="w-[90%] max-w-[1000px] flex flex-col md:flex-row items-center gap-6 md:gap-10 animate-fadeIn" onclick="event.stopPropagation()">
             <div class="w-full md:w-auto md:h-[60vh] aspect-[4/5] overflow-hidden rounded shadow-2xl shadow-black/50 bg-[#050505] flex items-center justify-center relative group">
+                
+                <div id="modal-loader" class="absolute inset-0 flex items-center justify-center z-0">
+                    <div class="w-8 h-8 border-2 border-white/10 border-t-muted-gold rounded-full animate-spin-slow"></div>
+                </div>
+
                 <button class="prev-btn absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2 z-40 hover:bg-black/20 rounded-full"><i class="fas fa-chevron-left text-3xl"></i></button>
-                <img id="modal-img" src="" alt="Portfolio Image" class="w-full h-full object-cover">
+                <img id="modal-img" src="" alt="Portfolio Image" class="w-full h-full object-cover relative z-10 opacity-0 transition-opacity duration-300">
                 <button class="next-btn absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors p-2 z-40 hover:bg-black/20 rounded-full"><i class="fas fa-chevron-right text-3xl"></i></button>
             </div>
             
@@ -308,7 +306,7 @@
                 <h2 class="font-serif text-[2.5rem] text-muted-gold italic">Q&A</h2>
             </div>
             <div class="max-w-[800px] mx-auto" id="faq-list">
-                </div>
+            </div>
             <div class="text-center mt-[60px] text-[#444] text-[0.8rem]">
                 <p>BY SONG SCALP | Copyright 2025. All rights reserved.</p>
             </div>
@@ -326,7 +324,6 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // 1. 초기화 및 로딩 처리
         AOS.init();
         
         window.addEventListener('load', () => {
@@ -337,7 +334,6 @@
             }, 500);
         });
 
-        // 2. Constants Data (React 코드에서 가져옴)
         const HERO_VIDEOS = [
             "https://github.com/user-attachments/assets/7901ca29-ba28-43bf-b5fb-f783c63cf481",
             "https://github.com/user-attachments/assets/4987a99f-52a0-4987-905f-4dd998489bea",
@@ -376,15 +372,17 @@
             { question: "유지기간은 얼마나 되나요?", answer: "평균 5~7년 이상 유지되며, 색이 옅어질 경우 리터치로 반영구적 유지가 가능합니다." }
         ];
 
-        // 3. Carousel Logic (Hero Section)
+        // Carousel Logic
         const carousel = document.getElementById('carousel');
         const dragArea = document.getElementById('drag-area');
         
-        // 비디오 엘리먼트 동적 생성
         const count = HERO_VIDEOS.length;
         const angle = 360 / count;
-        // 모바일에서 반경(Radius)을 대폭 줄여서 화면 밖으로 나가지 않도록 조정 (300 -> 160)
-        let radius = window.innerWidth < 768 ? 160 : 550;
+        
+        // [수정됨] Radius 계산 로직 최적화
+        // 카드의 너비(약 140px / 320px)에 따라 적절한 원주를 형성하도록 조정
+        // 모바일: 180px (너무 좁지 않게), PC: 500px (충분히 넓게)
+        let radius = window.innerWidth < 768 ? 180 : 500;
 
         function renderCarousel() {
             carousel.innerHTML = '';
@@ -407,12 +405,10 @@
         }
         renderCarousel();
         window.addEventListener('resize', () => {
-            // 리사이즈 시에도 반경 재계산
-            radius = window.innerWidth < 768 ? 160 : 550;
+            radius = window.innerWidth < 768 ? 180 : 500;
             renderCarousel();
         });
 
-        // 회전 로직
         let rotation = 0;
         let isDragging = false;
         let startX = 0;
@@ -441,9 +437,7 @@
             if (isTouch) {
                 const xDiff = Math.abs(x - startX);
                 const yDiff = Math.abs(y - startY);
-                // 세로 스크롤 의도면 무시
                 if (yDiff > xDiff) return;
-                // 가로 스와이프 의도면 스크롤 막기
                 if (e && e.cancelable) e.preventDefault();
             }
 
@@ -453,22 +447,21 @@
             updateCarousel();
         }
 
-        // PC Events
         dragArea.addEventListener('mousedown', e => handleStart(e.pageX, e.pageY));
         window.addEventListener('mousemove', e => handleMove(e.pageX, e.pageY, false));
         window.addEventListener('mouseup', () => { if(isDragging) { isDragging = false; startAuto(); }});
 
-        // Mobile Events
         dragArea.addEventListener('touchstart', e => handleStart(e.touches[0].pageX, e.touches[0].pageY), {passive: false});
         dragArea.addEventListener('touchmove', e => handleMove(e.touches[0].pageX, e.touches[0].pageY, true, e), {passive: false});
         window.addEventListener('touchend', () => { if(isDragging) { isDragging = false; startAuto(); }});
 
-        // 4. Modal Logic
+        // Modal Logic
         const modal = document.getElementById('portfolio-modal');
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
         const modalCounter = document.getElementById('modal-counter');
+        const modalLoader = document.getElementById('modal-loader');
         let currentCategory = [];
         let slideIndex = 0;
 
@@ -477,7 +470,6 @@
             slideIndex = 0;
             updateModalContent();
             modal.classList.remove('hidden');
-            // 약간의 딜레이 후 opacity 변경하여 페이드인 효과
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
             }, 10);
@@ -488,19 +480,30 @@
             modal.classList.add('opacity-0');
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 300); // transition duration과 일치
+            }, 300);
             document.body.classList.remove('modal-open');
         }
 
         function updateModalContent() {
             const item = currentCategory[slideIndex];
+            
+            // [수정됨] 이미지 로딩 로직 개선
+            modalImg.style.opacity = '0'; // 이미지 숨김
+            modalLoader.style.display = 'flex'; // 스피너 표시
+            
             modalImg.src = item.img;
+            
+            // 이미지가 로드되면 스피너 숨기고 이미지 표시
+            modalImg.onload = function() {
+                modalLoader.style.display = 'none';
+                modalImg.style.opacity = '1';
+            };
+
             modalTitle.innerText = item.title;
             modalDesc.innerText = item.desc;
             modalCounter.innerText = `${slideIndex + 1} / ${currentCategory.length}`;
         }
 
-        // 모달 버튼 이벤트
         document.querySelector('.close-btn').addEventListener('click', closeModal);
         document.querySelector('.prev-btn').addEventListener('click', (e) => {
             e.stopPropagation();
@@ -516,7 +519,7 @@
             if (e.target === modal) closeModal();
         });
 
-        // 5. FAQ Logic
+        // FAQ Logic
         const faqContainer = document.getElementById('faq-list');
         FAQ_DATA.forEach((item, index) => {
             const div = document.createElement('div');
@@ -540,10 +543,6 @@
                     answerBox.style.opacity = '0';
                     icon.style.transform = 'rotate(0deg)';
                 } else {
-                    // 다른 FAQ 닫기 (Accordion 효과 원할 시 주석 해제)
-                    // document.querySelectorAll('.answer-box').forEach(el => { el.style.maxHeight = null; el.style.opacity = '0'; });
-                    // document.querySelectorAll('.fa-chevron-down').forEach(el => el.style.transform = 'rotate(0deg)');
-
                     answerBox.style.maxHeight = '200px';
                     answerBox.style.opacity = '1';
                     icon.style.transform = 'rotate(180deg)';
