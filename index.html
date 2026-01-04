@@ -54,7 +54,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-
         /* [Header] */
         header {
             position: fixed; top: 0; width: 100%; padding: 25px 0; z-index: 1000;
@@ -97,7 +96,7 @@
             letter-spacing: 5px;
         }
 
-        /* [★ 카드 슬라이드 - 스크롤 허용 CSS 추가 ★] */
+        /* [★ 카드 슬라이드] */
         .carousel-viewport {
             position: absolute; 
             top: 0; left: 0; 
@@ -107,8 +106,6 @@
             z-index: 10; 
             cursor: grab;
             opacity: 1; 
-            
-            /* [중요] 브라우저에게 세로 스크롤은 허용하라고 알림 */
             touch-action: pan-y; 
         }
         .carousel-viewport:active { cursor: grabbing; }
@@ -160,16 +157,15 @@
             position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
             z-index: 20; opacity: 0.3; 
         }
-
         .mouse { width: 18px; height: 28px; border: 1px solid #fff; border-radius: 15px; position: relative; }
         .wheel { width: 1px; height: 5px; background: #fff; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); animation: scroll-anim 1.5s infinite; }
-
         @keyframes scroll-anim { 0% { top: 6px; opacity: 1; } 100% { top: 16px; opacity: 0; } }
 
         /* [Director Section] */
         .director-magazine {
             position: relative; padding: 180px 0;
-            background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            /* Updated Image from React version */
+            background-image: url('https://private-user-images.githubusercontent.com/248403968/531749635-a9631cff-5ad2-40b7-8dcd-cf75769a60e8.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NTA2MTIsIm5iZiI6MTc2NzU1MDMxMiwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQ5NjM1LWE5NjMxY2ZmLTVhZDItNDBiNy04ZGNkLWNmNzU3NjlhNjBlOC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxODExNTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lMmVjOTI4ODdiZGI0MzNlNWMyYjkyNzZlOTdjZDAxNGVlYTAwYmMxNmZlYjRmMGMxOTA2YTQwZTc3MjIwMzlmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.1GemuIzcN-gyLSeWfTIhvpGSELj-0RUkLId83Xf0Y44');
             background-size: cover; background-position: center top; background-attachment: fixed;
             display: flex; align-items: flex-end;
         }
@@ -177,9 +173,23 @@
             position: absolute; bottom: 0; left: 0; width: 100%; height: 80%;
             background: linear-gradient(to top, #0a0a0a 10%, rgba(10,10,10,0.8) 40%, transparent 100%); z-index: 1;
         }
+        /* Gradient for desktop right darkening */
+        .director-gradient-desktop {
+            display: none;
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: linear-gradient(to left, rgba(0,0,0,0.9), transparent 70%); z-index: 1;
+        }
+        @media(min-width: 769px) { 
+            .director-magazine { align-items: center; justify-content: flex-end; }
+            .director-gradient { display: none; }
+            .director-gradient-desktop { display: block; }
+        }
+
         .director-container { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; padding: 60px 20px; text-align: left; }
+        @media(min-width: 769px) { .director-container { text-align: left; margin: 0; margin-right: 5%; width: 50%; } }
+
         .director-title { font-size: 0.85rem; letter-spacing: 4px; color: var(--muted-gold); margin-bottom: 20px; display: block; font-weight: 300; }
-        .director-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 30px; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .director-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 30px; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.8); word-break: keep-all; }
         .director-desc { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 40px; max-width: 600px; }
         .history-list { list-style: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 25px; display: inline-block; }
         .history-list li { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 8px; font-weight: 300; }
@@ -204,6 +214,49 @@
         .card-line { width: 30px; height: 1px; background: var(--muted-gold); margin-bottom: 15px; }
         .card-desc { font-size: 0.85rem; color: #ccc; font-weight: 300; margin-bottom: 25px; }
         .click-indicator { padding: 8px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.75rem; color: #fff; font-weight: 300; }
+
+        /* [Difference Section (NEW)] */
+        .difference { padding: 100px 0; background: #0a0a0a; border-top: 1px solid #1a1a1a; }
+        .diff-container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .diff-box { border: 1px solid #222; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .diff-img-wrap { display: flex; height: 250px; position: relative; }
+        @media(min-width: 769px) { .diff-img-wrap { height: 400px; } }
+        
+        .diff-half { width: 50%; position: relative; overflow: hidden; background: #000; }
+        .diff-half img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s; }
+        .diff-half:hover img { transform: scale(1.05); }
+        .diff-label {
+            position: absolute; top: 15px; width: 100%; text-align: center; z-index: 10; pointer-events: none;
+        }
+        .diff-label span {
+            padding: 5px 15px; border-radius: 50px; font-size: 0.75rem; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .label-wrong { background: rgba(0,0,0,0.6); color: #aaa; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(2px); }
+        .label-bysong { background: rgba(181, 164, 139, 0.8); color: #000; font-weight: 500; border: 1px solid rgba(181, 164, 139, 0.3); backdrop-filter: blur(3px); }
+        
+        .vs-badge {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20;
+            width: 40px; height: 40px; background: #111; border: 1px solid #333; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+        .vs-badge span { color: var(--muted-gold); font-size: 0.7rem; font-weight: bold; font-style: italic; }
+
+        .diff-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #222; }
+        .diff-col-header { 
+            display: none; 
+            padding: 30px 10px 10px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; letter-spacing: 3px; uppercase; 
+        }
+        @media(min-width: 769px) { .diff-col-header { display: block; } }
+        
+        .diff-cell { padding: 20px; border-bottom: 1px solid #222; display: flex; flex-direction: column; justify-content: center; }
+        .diff-cell.left { background: #111; border-right: 1px solid #222; }
+        .diff-cell.right { background: #161616; position: relative; }
+        .diff-category { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .diff-right-cat { color: rgba(181, 164, 139, 0.7); }
+        .diff-text { font-size: 0.85rem; font-weight: 300; line-height: 1.5; word-break: keep-all; }
+        .text-wrong { color: #777; }
+        .text-bysong { color: rgba(255,255,255,0.9); }
 
         /* [Modal] */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(5px); z-index: 9999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s; }
@@ -250,7 +303,6 @@
     </header>
 
     <section class="hero">
-        
         <div class="hero-title-wrap">
             <h1>Rewrite Your Worth</h1>
         </div>
@@ -310,20 +362,21 @@
     </section>
 
     <section class="director-magazine">
-        <div class="director-gradient"></div> 
+        <div class="director-gradient"></div>
+        <div class="director-gradient-desktop"></div>
         <div class="director-container" data-aos="fade-up">
             <span class="director-title">MASTER DIRECTOR</span>
-            <h3 class="director-quote">"단 하나의 점도<br>의미 없이 찍지 않습니다."</h3>
+            <h3 class="director-quote">"무작정 까맣기만한<br>두피문신을 원하신다면,<br><span style="font-size:0.8em; color:rgba(255,255,255,0.9);">뒤로가기를 누르셔도 좋습니다."</span></h3>
             <p class="director-desc">
-                SMP는 단순한 미용 시술이 아닌 정교한 디자인입니다.<br>
-                고객님의 고유한 분위기와 두상을 정밀 분석하여<br>
-                가장 자연스러운 아름다움을 찾아드립니다.
+                타고난 원모결을 따라 디자인하는 가장 자연스러운 두피문신<br>
+                맞춤 상담과 독자적인 기법으로 완성해드립니다.
             </p>
             <ul class="history-list">
-                <li>THE BLACK 대표원장</li>
-                <li>국제 SMP 전문가 협회(ISPA) 정회원</li>
-                <li>K-Beauty 두피문신 디자인 부문 대상</li>
-                <li>미술대학 서양화 전공 (디자인 색채학 수료)</li>
+                <li>BY SONG SCALP 대표원장</li>
+                <li>전) Toronto, Chronic Ink 아티스트</li>
+                <li>전) LA, Beauty Friends 아티스트</li>
+                <li>제 17회 국제 바디아트 콘테스트 심사위원</li>
+                <li>변색 최소화 기법 자체 개발</li>
             </ul>
         </div>
     </section>
@@ -337,7 +390,7 @@
 
             <div class="trigger-grid" data-aos="fade-up" data-aos-delay="100">
                 <div class="pf-card" onclick="openModal('hairline')">
-                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="헤어라인">
+                    <img src="https://private-user-images.githubusercontent.com/248403968/531707384-220c59e1-e8a6-4134-94c1-adef9c8fdb2d.jpeg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1MTk2ODUsIm5iZiI6MTc2NzUxOTM4NSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzA3Mzg0LTIyMGM1OWUxLWU4YTYtNDEzNC05NGMxLWFkZWY5YzhmZGIyZC5qcGVnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDEwNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjAxMDRUMDkzNjI1WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZDc2OWIyMTIxNTU4ZmNhNTIyZDMwYjZiYjliZmJkNmExZTU3ZmE1OWEzMTJiYTAwMWU5MmMwMGRiODliZjdiYSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.nKX-bobgtrfiCNEiP887iX2I7EMAJ8d_ig-rLZHcwrI" alt="헤어라인">
                     <div class="card-content">
                         <span class="card-title">HAIRLINE</span>
                         <div class="card-line"></div>
@@ -346,7 +399,7 @@
                     </div>
                 </div>
                 <div class="pf-card" onclick="openModal('density')">
-                    <img src="https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="밀도보강">
+                    <img src="https://private-user-images.githubusercontent.com/248403968/531708828-81cdffa6-78b0-46b9-a7ce-3ed80e2844c4.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1MTk2ODUsIm5iZiI6MTc2NzUxOTM4NSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzA4ODI4LTgxY2RmZmE2LTc4YjAtNDZiOS1hN2NlLTNlZDgwZTI4NDRjNC5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQwOTM2MjVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYzg2NjUzODI4N2FlNmMyZTMxNTIxYjE5YjI4MTFkODU2OTVhMzVhZTRmYmFlM2FjN2Q3MjA1MjI2OTA1ODYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.79z9U1D7oUwBiohud2Op2pgk4vyw_BS3iitqANeoB88" alt="밀도보강">
                     <div class="card-content">
                         <span class="card-title">DENSITY</span>
                         <div class="card-line"></div>
@@ -355,12 +408,78 @@
                     </div>
                 </div>
                 <div class="pf-card" onclick="openModal('scar')">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="삭발/흉터">
+                    <img src="https://private-user-images.githubusercontent.com/248403968/531712695-aac5ce73-1f8c-45a9-8cb5-db5474cb9247.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1MTk2ODUsIm5iZiI6MTc2NzUxOTM4NSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzEyNjk1LWFhYzVjZTczLTFmOGMtNDVhOS04Y2I1LWRiNTQ3NGNiOTI0Ny5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQwOTM2MjVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yMjRkODk3ZTQyMTBjODAzNzZkMzExNzZlMGM1YzNlYTJmNjE4NmUxNDFlODk4Yzc3YjgxMjA4NmI0ODZiY2I2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.1VD0mU9EYOj95lCMgXGoBNcts4kl3lYfebmUesrEM6c" alt="삭발/흉터">
                     <div class="card-content">
                         <span class="card-title">SCAR COVER</span>
                         <div class="card-line"></div>
                         <span class="card-desc">흉터 커버 / 삭발 디자인</span>
                         <div class="click-indicator">View Detail</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="difference">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>WHAT'S DIFFERENT?</h2>
+                <p>변색 없이 유지되는 올바른 두피문신, 어떤게 다를까요?</p>
+            </div>
+            
+            <div class="diff-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="diff-box">
+                    <div class="diff-img-wrap">
+                        <div class="diff-half">
+                            <div class="diff-label"><span class="label-wrong">WRONG CASE</span></div>
+                            <img src="https://private-user-images.githubusercontent.com/248403968/531752961-12547a90-aba3-4f8f-bff5-16030afff068.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NTM2MDIsIm5iZiI6MTc2NzU1MzMwMiwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzUyOTYxLTEyNTQ3YTkwLWFiYTMtNGY4Zi1iZmY1LTE2MDMwYWZmZjA2OC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxOTAxNDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yZGE2NzVjZTNhODczMGE5NzNhMTYyMmZmM2ViNDk4ZDYyZDE3ODQxZWYwMTJkNmNiNDI1ZGNiZTEzNjFmMzUxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.UtxVlEfT4lZaHgiw722_FANMmfPJBxIcjfZ8yGi3I3s" alt="Wrong Case">
+                        </div>
+                        <div class="diff-half">
+                            <div class="diff-label"><span class="label-bysong">BY SONG SCALP</span></div>
+                            <img src="https://private-user-images.githubusercontent.com/248403968/531752962-3f96d33a-7c50-4ca7-a9b9-8abbb4266362.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NTM2MDIsIm5iZiI6MTc2NzU1MzMwMiwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzUyOTYyLTNmOTZkMzNhLTdjNTAtNGNhNy1hOWI5LThhYmJiNDI2NjM2Mi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxOTAxNDJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mZmI4ZDliYTkxYjJkMjJkODZhMzBhMDZiZjg1MTA1ZjgxOWQ0Yjc5ZTdjZTQyZGY4OTM3MzI0MjI4ODA0Y2RlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.1SQRCSJwpPQBO2u4V-cIP6zNO1EVxhEuI1FnCIxnQPI" alt="By Song Case">
+                        </div>
+                        <div class="vs-badge"><span>VS</span></div>
+                    </div>
+                    
+                    <div class="diff-grid">
+                        <div class="diff-col-header" style="color:#555;">WRONG CASE</div>
+                        <div class="diff-col-header" style="color:var(--muted-gold);">BY SONG SCALP</div>
+
+                        <div class="diff-cell left">
+                            <span class="diff-category">테크닉</span>
+                            <p class="diff-text text-wrong">두피 상태를 고려하지 않고 기계적으로 찍어내는 획일적 시술</p>
+                        </div>
+                        <div class="diff-cell right">
+                            <span class="diff-category diff-right-cat">테크닉</span>
+                            <p class="diff-text text-bysong">5년 경력의 노하우로 두피 부위와 컨디션에 맞춰 압(Press) 조절</p>
+                        </div>
+
+                        <div class="diff-cell left">
+                            <span class="diff-category">색소 주입</span>
+                            <p class="diff-text text-wrong">필요 이상으로 진하고 깊게 주입하여 시간이 지나면 푸르게 변색됨</p>
+                        </div>
+                        <div class="diff-cell right">
+                            <span class="diff-category diff-right-cat">색소 주입</span>
+                            <p class="diff-text text-bysong">자체 개발 기법으로 딱 필요한 만큼의 최소한의 색소만 주입 (변색 방지)</p>
+                        </div>
+
+                        <div class="diff-cell left">
+                            <span class="diff-category">디자인</span>
+                            <p class="diff-text text-wrong">헤어 라인을 꽉 채우거나 과하게 디자인하여 인위적임</p>
+                        </div>
+                        <div class="diff-cell right">
+                            <span class="diff-category diff-right-cat">디자인</span>
+                            <p class="diff-text text-bysong">머리털이 나는 범위 내에서 '음영의 역할'을 하는 본질에 집중</p>
+                        </div>
+
+                        <div class="diff-cell left">
+                            <span class="diff-category">결과물</span>
+                            <p class="diff-text text-wrong">밝은 곳에서 보면 점이 퍼져 보이고 문신한 티가 많이 남</p>
+                        </div>
+                        <div class="diff-cell right">
+                            <span class="diff-category diff-right-cat">결과물</span>
+                            <p class="diff-text text-bysong">태양 볕 아래서도 당당할 수 있는 맑고 선명한 자연스러움 유지</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -407,7 +526,7 @@
         // AOS 초기화 (스크롤 애니메이션)
         AOS.init({ duration: 1200, once: true });
 
-        // [★ 로딩 처리 스크립트 수정 (0.5초) ★]
+        // [★ 로딩 처리 스크립트 (0.5초) ★]
         window.addEventListener('load', () => {
             // 500ms = 0.5초 동안 로딩 아이콘 보여줌
             setTimeout(() => {
@@ -419,8 +538,7 @@
             }, 500); 
         });
 
-
-        /* [3D Carousel Logic (모바일 반응형 & 스크롤 개선)] */
+        /* [3D Carousel Logic] */
         const carousel = document.getElementById('carousel');
         const cards = document.querySelectorAll('.card');
         const count = cards.length; 
@@ -428,10 +546,9 @@
         let rotation = 0;
         let isDragging = false;
         let startX = 0;
-        let startY = 0; // 세로 스크롤 감지를 위해 Y좌표 추가
+        let startY = 0; 
         let lastRotation = 0;
 
-        // 카드가 커졌으므로 회전 반경(Radius)을 조금 더 늘려줌 (겹침 방지)
         const getRadius = () => window.innerWidth < 768 ? 300 : 600;
         let radius = getRadius();
 
@@ -457,7 +574,7 @@
         const onStart = (e) => {
             isDragging = true;
             startX = e.pageX || e.touches[0].pageX;
-            startY = e.pageY || e.touches[0].pageY; // 시작 시 Y좌표 기록
+            startY = e.pageY || e.touches[0].pageY;
             lastRotation = rotation;
             clearInterval(autoDrive);
         };
@@ -466,19 +583,13 @@
             if(!isDragging) return;
 
             const x = e.pageX || e.touches[0].pageX;
-            const y = e.pageY || e.touches[0].pageY; // 현재 Y좌표
+            const y = e.pageY || e.touches[0].pageY;
 
-            // [★ 스크롤 vs 회전 구분 로직 추가 ★]
-            // 모바일 터치 이벤트일 경우
+            // 스크롤 vs 회전 구분
             if(e.type === 'touchmove') {
                 const xDiff = Math.abs(x - startX);
                 const yDiff = Math.abs(y - startY);
-
-                // 세로 움직임이 가로보다 크다면 -> "이건 스크롤이다"
-                if (yDiff > xDiff) {
-                    // 회전시키지 않고 함수 종료 (브라우저가 알아서 스크롤함)
-                    return; 
-                }
+                if (yDiff > xDiff) return; // 세로 스크롤 허용
             }
 
             const speed = window.innerWidth < 768 ? 0.5 : 0.2;
@@ -500,42 +611,40 @@
         
         dragArea.addEventListener('touchstart', onStart, {passive: false});
         
-        // [★ 중요: 스크롤 감지 로직 적용을 위해 이벤트 리스너 수정 ★]
         dragArea.addEventListener('touchmove', (e) => {
             if(!isDragging) return;
-            
             const x = e.touches[0].pageX;
             const y = e.touches[0].pageY;
             const xDiff = Math.abs(x - startX);
             const yDiff = Math.abs(y - startY);
 
-            // 세로로 더 많이 움직였으면 스크롤 허용 (preventDefault 안 함)
-            if (yDiff > xDiff) {
-                return;
-            }
+            if (yDiff > xDiff) return;
 
-            // 가로로 더 많이 움직였으면 스크롤 막고 회전 (preventDefault 함)
             if(e.cancelable) e.preventDefault();
             onMove(e);
-            
         }, {passive: false});
         
         window.addEventListener('touchend', onEnd);
 
-
-        /* Modal Logic (기존 데이터 유지) */
+        /* [Portfolio Data Update (React Version)] */
         const portfolioData = {
             'hairline': [
-                { title: 'M자 헤어라인 교정', desc: '자연스러운 그라데이션 기법 적용', img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
-                { title: '측두부 라인 디자인', desc: '구레나룻과 이어지는 입체적 라인', img: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
+                { title: 'M자 헤어라인 교정', desc: '자연스러운 그라데이션 기법으로 M자 라인을 보완합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531738037-90b86d42-3e16-4442-9622-9e781b67be98.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDA5NDMsIm5iZiI6MTc2NzU0MDY0MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzM4MDM3LTkwYjg2ZDQyLTNlMTYtNDQ0Mi05NjIyLTllNzgxYjY3YmU5OC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNTMwNDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yYTY0YjlmYWNkMjZhNTViZTlhZDA5MGY1MDJlYjgyNjkyNTA5NjU0Njg1NDYxNGVmOTI4NDRjMTIxMWYxOGJlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vB2dI9icM2vP-cWRdU11N1IxrvPmZVxFDfHbnY8pD-s' },
+                { title: '측두부 헤어라인 숱채움', desc: '측면 헤어라인의 밀도를 높여 얼굴형을 또렷하게 만듭니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531738044-0c2ff2ff-cb2d-47c7-8d7b-2ab64c5dea07.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDA5NDMsIm5iZiI6MTc2NzU0MDY0MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzM4MDQ0LTBjMmZmMmZmLWNiMmQtNDdjNy04ZDdiLTJhYjY0YzVkZWEwNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNTMwNDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hY2U2YzJkZGI4MjNmY2UyNDU2OGNlZDMwMWFjMTQ0ZDNjN2NhYTc0NzViYmUxZTMzZWFjYTMwNTlhODg2NDE1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.qnX4dRswZyf2dN1AIfBh0VAyE4Mfw9xo4qXT9hMSsKY' },
+                { title: '이마 헤어라인 교정', desc: '넓은 이마를 커버하고 이상적인 비율의 헤어라인을 디자인합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531738047-979a896f-acc7-4e8a-9043-83be3a2fb6f1.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDA5NDMsIm5iZiI6MTc2NzU0MDY0MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzM4MDQ3LTk3OWE4OTZmLWFjYzctNGU4YS05MDQzLTgzYmUzYTJmYjZmMS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNTMwNDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lZjZiYjdiOGJhNzAzMTYwMTRhY2U3MzRjMWMwN2RlNGUxODlhYzBjZTE2NjUwNjJhN2YyMTE4NTE3YWE3N2QzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nDYCsIOUghDucgMB9tpwSmW6V1VlcNFGngltmzKC6SA' },
+                { title: '구렛나룻 숱채움', desc: '구렛나룻 라인을 정교하게 채워 남성적인 매력을 더합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531738054-4a04b816-a4ae-4500-b444-54d81a3a14ab.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDA5NDMsIm5iZiI6MTc2NzU0MDY0MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzM4MDU0LTRhMDRiODE2LWE0YWUtNDUwMC1iNDQ0LTU0ZDgxYTNhMTRhYi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNTMwNDNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hNTc3MGNhYzlmZmI4OGM2MDE0ZTkyYWZhZTg3YzZiMGUwMWIyMDQ4ZmY5ZmZhNzIxYzI5MmYyMzc5Y2FlOTNjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.hkngVTyZRjooc2ymDRYMNpxb8vEEd2NACbb_1Unl0Qo' }
             ],
             'density': [
-                { title: '정수리 밀도보강', desc: '비어 보이는 두피를 완벽하게 커버', img: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
-                { title: '가르마 숱채움', desc: '여성 가르마 라인 집중 커버', img: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
+                { title: '여성 가르마 숱채움', desc: '휑해진 가르마 라인을 촘촘하게 채워 볼륨감을 살립니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531740107-40f038ac-23a1-4b40-aa07-edf36f778459.JPG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQwMTA3LTQwZjAzOGFjLTIzYTEtNGI0MC1hYTA3LWVkZjM2Zjc3ODQ1OS5KUEc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05MjJmZjRiYjNmYzdlMGViMTU5NGNjMzE5OTA5ZGM4ODY0NGVmYjJiZTk1ZDE0NzU5ZmQ5MDhmYWEyMGY1NjI2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.GtETKpxGoAlaEeeS2DWpArldVHtD1j-KqqUIi8y9FkY' },
+                { title: '남성 가르마 숱채움', desc: '가르마 주변의 밀도를 높여 더욱 풍성한 스타일을 완성합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531748699-fa0b4303-4e2d-4f16-a4c3-e1f257b1216a.JPG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQ4Njk5LWZhMGI0MzAzLTRlMmQtNGYxNi1hNGMzLWUxZjI1N2IxMjE2YS5KUEc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yZjBjODAyZTRhODk4NTZmNmYxZTU3YTI4ODA5NDJjMTk0MDFlZDU4YWU2ZDJjNTZjZjQzN2M3OGExNTZmYjE2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vSaZfNiYeGaBm_3wuNRMYwNmFr3NmjNIJHHzoVBhdS0' },
+                { title: '여성 정수리 밀도보강', desc: '비어 보이는 정수리 밀도를 자연스럽게 보강합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531743445-b2f001ee-8e40-4a81-a7fd-0945de1256eb.JPG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQzNDQ1LWIyZjAwMWVlLThlNDAtNGE4MS1hN2ZkLTA5NDVkZTEyNTZlYi5KUEc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02NzQwM2MxMGQ0ZWRlZDY0MDY3ZDBjZmQ3N2VlYzM5Yzc3OGMwNTM3ZGVmZjI0MGFhN2U4NmVkYmJmYTQ3ODVmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.lxG8q5iasDOATImf5s4xPJIDvlPn1-VJuZRs4_jAZkk' },
+                { title: '남성 정수리 밀도보강', desc: '탈모가 진행된 정수리 부위를 커버하여 젊은 인상을 되찾아드립니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531744098-add54e06-cb81-4893-8929-536f9c37fc30.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQ0MDk4LWFkZDU0ZTA2LWNiODEtNDg5My04OTI5LTUzNmY5YzM3ZmMzMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iMzZiM2FjZjIzMDllYzgwODcxMDk4MzMwZDhkMTE5ODNlNzkyYjQ4N2Y0YTVkZDNlMjkwYjYwYjg4YmFjNzU0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.GMyXMS5ecQ0LQuuGF8zf3pV1IrG73cakvC21P7z91SY' },
+                { title: '여성 후두부 숱채움', desc: '후두부의 부족한 숱을 채워 전체적인 헤어 밸런스를 맞춥니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531744169-2db1a44f-627e-4179-b774-4acbba244616.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQ4Njk5LWZhMGI0MzAzLTRlMmQtNGYxNi1hNGMzLWUxZjI1N2IxMjE2YS5KUEc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yZjBjODAyZTRhODk4NTZmNmYxZTU3YTI4ODA5NDJjMTk0MDFlZDU4YWU2ZDJjNTZjZjQzN2M3OGExNTZmYjE2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vSaZfNiYeGaBm_3wuNRMYwNmFr3NmjNIJHHzoVBhdS0' },
+                { title: '남성 후두부 숱채움', desc: '후두부 밀도 보강으로 뒷모습까지 자신감 있게 완성합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531744183-8c67436c-08e4-4bbf-9121-a06c73a59933.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NDk3MjUsIm5iZiI6MTc2NzU0OTQyNSwicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzQ0MTgzLThjNjc0MzZjLTA4ZTQtNGJiZi05MTIxLWEwNmM3M2E1OTkzMy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxNzU3MDVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hNDViZTQyMDM3YjI2ZWFkNGNmMzYxZjQ2YmM1NTk1MDkwZGFmM2JiOTQ3OTU4Y2MyOWQwMTE4OTg4NDcwZWY2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.PPHziXwskpwrj_hvHxh2Jlu6Qi-aQU6jy149_cVpXcQ' }
             ],
             'scar': [
-                { title: '두피 흉터 커버', desc: '이식 및 절개 흉터 90% 이상 커버', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' },
-                { title: '삭발 디자인', desc: '전체 삭발 스타일링', img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80' }
+                { title: '흉터 커버', desc: '수술 흉터나 상처를 주변 모발과 조화롭게 커버합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531751805-6d147033-96a5-46f4-a4dc-09c703b82bb5.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NTI1NzMsIm5iZiI6MTc2NzU1MjI3MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzUxODA1LTZkMTQ3MDMzLTk2YTUtNDZmNC1hNGRjLTA5YzcwM2I4MmJiNS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxODQ0MzNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mNTM3N2IzMjVmMjUyY2Y2MTAxY2M3YjhiYTRkZjk4MmJkM2RjOTk5N2JjZDk2ZjIwNDI2YjZlMTg0MDNkYzhlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.pMpGockK9Hx6hvtWRSM1Eg_CzKo8za7GjWJRcJJRxhU' },
+                { title: '삭발디자인 작업', desc: '두상에 맞춘 전체 삭발 디자인으로 스타일리쉬함을 완성합니다.', img: 'https://private-user-images.githubusercontent.com/248403968/531751827-cee7fac8-7c3f-41d6-b3ea-f22b948b2181.JPG?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njc1NTI1NzMsIm5iZiI6MTc2NzU1MjI3MywicGF0aCI6Ii8yNDg0MDM5NjgvNTMxNzUxODI3LWNlZTdmYWM4LTdjM2YtNDFkNi1iM2VhLWYyMmI5NDhiMjE4MS5KUEc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDEwNFQxODQ0MzNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1jZjZlMDdhNDkzNjExMDFmNGE3NzcxYjdjODYyOWJhMGY5NDViNDZiMTczMjY4MjM2YjkzMmM0ZmMxMDQxNTg4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.-irUfPk5pHh1dhxUrc6ckf8bQr3vINukTOKVy69UfUk' }
             ]
         };
 
