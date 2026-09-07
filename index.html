@@ -106,11 +106,6 @@
             </p>
         </div>
 
-        <div class="absolute bottom-[25px] left-1/2 -translate-x-1/2 z-20 opacity-30">
-            <div class="w-[18px] h-[28px] border border-white rounded-[15px] relative">
-                <div class="w-[1px] h-[5px] bg-white absolute top-[6px] left-1/2 -translate-x-1/2 animate-scroll"></div>
-            </div>
-        </div>
     </section>
 
     <section class="relative w-full min-h-screen flex items-end md:items-center bg-cover bg-[center_top] bg-scroll md:bg-fixed"
@@ -434,7 +429,15 @@
                 let a = (rotation + i * angle) % 360;
                 if (a > 180) a -= 360;
                 if (a < -180) a += 360;
-                if (Math.abs(a) < 70) loadCard(cards[i]);
+                const near = Math.abs(a) < 70;
+                const c = cards[i];
+                if (near) loadCard(c);
+                /* 화면 밖 영상은 세운다. 폰은 동시에 돌릴 수 있는 디코더가
+                   몇 개뿐이라, 8개를 다 틀어두면 터치가 밀린다. */
+                if (c.video && c.loaded) {
+                    if (near) { if (c.video.paused) tryPlay(c.video); }
+                    else if (!c.video.paused) c.video.pause();
+                }
             }
         }
 
@@ -443,7 +446,7 @@
             cards.length = 0;
             HERO_VIDEOS.forEach((base, i) => {
                 const card = document.createElement('div');
-                card.className = "absolute w-full h-full left-0 top-0 rounded-md overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.9)] bg-black backface-hidden transition-colors duration-500 hover:border-white/60 group";
+                card.className = "absolute w-full h-full left-0 top-0 rounded-md overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.9)] bg-black backface-hidden transition-opacity duration-500 group";
                 card.style.transform = `rotateY(${i * angle}deg) translateZ(${radius}px)`;
 
                 /* 포스터를 카드 배경으로 먼저 깐다.
@@ -505,7 +508,21 @@
         let startX = 0;
         let startY = 0;
         let lastRotation = 0;
-        let autoRotate = setInterval(() => { rotation -= 0.2; updateCarousel(); }, 30);
+        let autoPaused = false;
+        let lastT = 0;
+        /* 기존 setInterval(0.2도/30ms) 과 같은 속도(약 6.7도/초)를
+           프레임에 맞춰 돌린다. 기기 주사율과 무관하게 일정하다. */
+        function tick(t) {
+            if (!autoPaused && !isDragging) {
+                if (lastT) {
+                    rotation -= Math.min(t - lastT, 50) * 0.00667;
+                    updateCarousel();
+                }
+            }
+            lastT = t;
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
 
         let visTick = 0;
         function updateCarousel() {
@@ -513,11 +530,13 @@
             if (++visTick % 10 === 0) updateVisibility();
         }
 
-        function stopAuto() { clearInterval(autoRotate); }
-        function startAuto() { stopAuto(); autoRotate = setInterval(() => { rotation -= 0.2; updateCarousel(); }, 30); }
+        function stopAuto() { autoPaused = true; }
+        function startAuto() { autoPaused = false; lastT = 0; }
 
+        let axis = null;   /* 'x' = 캐러셀 돌리기, 'y' = 페이지 스크롤 */
         function handleStart(x, y) {
             isDragging = true;
+            axis = null;
             startX = x;
             startY = y;
             lastRotation = rotation;
@@ -530,11 +549,17 @@
             if (isTouch) {
                 const xDiff = Math.abs(x - startX);
                 const yDiff = Math.abs(y - startY);
-                if (yDiff > xDiff) return;
+                /* 방향을 한 번만 정한다. 제스처 도중에 판정이 뒤집히면
+                   페이지가 스크롤되다 말고 캐러셀이 튀는 느낌이 난다. */
+                if (axis === null) {
+                    if (xDiff < 8 && yDiff < 8) return;   /* 아직 판단 보류 */
+                    axis = xDiff > yDiff ? 'x' : 'y';
+                }
+                if (axis === 'y') return;
                 if (e && e.cancelable) e.preventDefault();
             }
 
-            const speed = window.innerWidth < 768 ? 0.5 : 0.2;
+            const speed = window.innerWidth < 768 ? 0.28 : 0.2;
             const delta = x - startX;
             rotation = lastRotation + delta * speed;
             updateCarousel();
